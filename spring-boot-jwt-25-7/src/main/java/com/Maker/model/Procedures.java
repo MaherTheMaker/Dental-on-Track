@@ -3,8 +3,11 @@ package com.Maker.model;
 
 import org.hibernate.validator.constraints.UniqueElements;
 
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+
 
 @Entity
 public class Procedures {
