@@ -1,6 +1,7 @@
 package com.Maker.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.UniqueElements;
 
 
@@ -17,6 +18,11 @@ public class Procedures {
 
     @Column(unique = true,length = 25,nullable = false)
     private String pName;
+
+
+
+
+
 
     private float defaultPrice;
 

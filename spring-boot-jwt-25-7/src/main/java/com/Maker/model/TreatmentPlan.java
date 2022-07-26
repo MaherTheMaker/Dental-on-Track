@@ -13,15 +13,38 @@ public class TreatmentPlan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-//    @ManyToOne
-//    @JoinColumn(name="patientTooth_id")
-//    @JsonIgnore
+
+// Todo many to many ammar later (not that important)
+    @ManyToOne
+    @JoinColumn(name="patientTooth_id")
+    @JsonIgnore
     private PatientTooth patientTooth;
 
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    @ManyToOne
+    @JoinColumn(name="patient_id")
+    @JsonIgnore
+    private Patient patient;
+
+    //Todo change to ToothProcedures.... done price
 
 //    @OneToMany(mappedBy = "treatmentPlan",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Procedures> proceduresList;
+//    private List<Procedures> proceduresList;
+//
+
+
 
 
     private Date createdAt;
@@ -33,9 +56,17 @@ public class TreatmentPlan {
     public TreatmentPlan() {
     }
 
-    public TreatmentPlan(PatientTooth patientTooth, List<Procedures> proceduresList, Date createdAt, String notes) {
+//    public TreatmentPlan(PatientTooth patientTooth, List<Procedures> proceduresList, Date createdAt, String notes) {
+//        this.patientTooth = patientTooth;
+//        this.proceduresList = proceduresList;
+//        this.createdAt = createdAt;
+//        this.notes = notes;
+//    }
+
+//Todo remove Temp
+    public TreatmentPlan(PatientTooth patientTooth, Patient patient, Date createdAt, String notes) {
         this.patientTooth = patientTooth;
-        this.proceduresList = proceduresList;
+        this.patient = patient;
         this.createdAt = createdAt;
         this.notes = notes;
     }
@@ -43,7 +74,6 @@ public class TreatmentPlan {
     public int getId() {
         return id;
     }
-
 
 
     public PatientTooth getPatientTooth() {
@@ -54,13 +84,14 @@ public class TreatmentPlan {
         this.patientTooth = patientTooth;
     }
 
-    public List<Procedures> getProceduresList() {
-        return proceduresList;
-    }
+//    public List<Procedures> getProceduresList() {
+//        return proceduresList;
+//    }
+//
+//    public void setProceduresList(List<Procedures> proceduresList) {
+//        this.proceduresList = proceduresList;
+//    }
 
-    public void setProceduresList(List<Procedures> proceduresList) {
-        this.proceduresList = proceduresList;
-    }
 
     public Date getCreatedAt() {
         return createdAt;

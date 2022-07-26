@@ -6,9 +6,10 @@ import com.Maker.model.Tooth;
 import com.Maker.model.TreatmentPlan;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TreatmentPlanRepo extends JpaRepository<TreatmentPlan, Integer> {
+import java.util.List;
 
-    TreatmentPlan findAllByPatient(Patient patient);
-    TreatmentPlan findAllByPatientTooth (PatientTooth patientTooth);
+public interface TreatmentPlanRepo extends JpaRepository<TreatmentPlan, Integer> {
+    List<TreatmentPlan> findAllByPatient(Patient patient);
+    List<TreatmentPlan> findAllByPatientTooth (PatientTooth patientTooth);
 
 }
