@@ -47,9 +47,12 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
         return treatmentPlanRepo.findAllByPatient(patient);
     }
 
+
     @Override
     public List<TreatmentPlan> getAllTreatmentPlanByTooth(PatientTooth patientTooth) {
         return treatmentPlanRepo.findAllByPatientTooth(patientTooth);
     }
+
+
 }
 

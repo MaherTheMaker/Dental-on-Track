@@ -40,9 +40,9 @@ public class TreatmentPlan {
 
     //Todo change to ToothProcedures.... done price
 
-//    @OneToMany(mappedBy = "treatmentPlan",cascade = CascadeType.ALL,orphanRemoval = true)
-//    private List<Procedures> proceduresList;
-//
+    @OneToMany(mappedBy = "treatmentPlan",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<ToothProcedure> toothProcedures;
+
 
 
 

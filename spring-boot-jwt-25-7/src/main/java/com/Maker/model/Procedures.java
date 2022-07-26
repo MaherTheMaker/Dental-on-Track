@@ -24,6 +24,8 @@ public class Procedures {
 
 
 
+
+
     private float defaultPrice;
 
     private int defaultNumberOfAppointments;

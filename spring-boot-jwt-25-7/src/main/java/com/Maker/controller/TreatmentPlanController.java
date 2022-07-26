@@ -5,6 +5,7 @@ import com.Maker.model.Patient;
 import com.Maker.model.Procedures;
 import com.Maker.model.TreatmentPlan;
 import com.Maker.service.PatientService;
+import com.Maker.service.ToothProcedureService;
 import com.Maker.service.TreatmentPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,9 @@ public class TreatmentPlanController {
 
     @Autowired
     private TreatmentPlanService treatmentPlanService;
+
+    @Autowired
+    private ToothProcedureService toothProcedureService;
 
     @Autowired
     private PatientService patientService;
@@ -48,6 +52,11 @@ public class TreatmentPlanController {
         return ResponseEntity.accepted().body(treatmentPlanService.EditTreatmentPlan(treatmentPlan));
     }
 
+    @PostMapping("/{id}/AddToothProcedure")
+    private ResponseEntity<TreatmentPlan> AddToothProcedure(@PathVariable int id , @RequestBody TreatmentPlan treatmentPlan)
+    {
+        return ResponseEntity.accepted().body(treatmentPlanService.EditTreatmentPlan(treatmentPlan));
+    }
 
 
     // Todo add fun to add  Procedures to a TP
