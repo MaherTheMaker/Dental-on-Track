@@ -1,26 +1,25 @@
 package com.Maker.service;
 
 import com.Maker.dao.ToothProcedureRepo;
-import com.Maker.dao.TreatmentPlanRepo;
 import com.Maker.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class ToothProcedureServiceImp implements ToothProcedureService {
 
     //TODO some validation
+    //Todo ...maybe... merge this with TreatmentPlan service
+
     @Autowired
     private ToothProcedureRepo toothProcedureRepo;
 
 
-    @Override
-    public ToothProcedure addToothProcedure(ToothProcedure toothProcedure) {
-        return toothProcedureRepo.save(toothProcedure);
-    }
+
+
+
 
     @Override
     public ToothProcedure doToothProcedure(int id) {
@@ -29,6 +28,7 @@ public class ToothProcedureServiceImp implements ToothProcedureService {
         return toothProcedureRepo.save(toothProcedure);
 
     }
+
 
     @Override
     public ToothProcedure getToothProcedure(int id) {
@@ -41,8 +41,8 @@ public class ToothProcedureServiceImp implements ToothProcedureService {
     }
 
     @Override
-    public List<ToothProcedure> getAllToothProceduresByProcedure(Procedures procedures) {
-        return toothProcedureRepo.findAllByProcedure(procedures);
+    public List<ToothProcedure> getAllToothProceduresByProcedure(MyProcedure myProcedure) {
+        return toothProcedureRepo.findAllByMyProcedure(myProcedure);
     }
 
     @Override

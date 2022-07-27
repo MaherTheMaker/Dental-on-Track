@@ -15,6 +15,7 @@ import java.util.List;
 @Repository
 public class PatientServiceImp implements PatientService {
 
+    //TODO some validation
 
     @Autowired
     private PatientRepo patientRepo;
@@ -66,7 +67,7 @@ public class PatientServiceImp implements PatientService {
 
         if (result.getDeciduousTeeth()!=null)
         {
-            //TODO check if not the first
+            //TODO check if Diagnosed Before
            List<PatientTooth> test= patientToothService.GetPatientTeeth(pId);
            if(test.isEmpty())
             patientToothService.addPatientTooth(result);
@@ -81,7 +82,8 @@ public class PatientServiceImp implements PatientService {
 
     @Override
     public List<Patient> searchPatient(String name) {
-        return patientRepo.findAllByFullName(name);
+        return patientRepo.findAllByFullNameContaining(name);
+
     }
 
     @Override

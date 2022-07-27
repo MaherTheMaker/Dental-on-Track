@@ -1,11 +1,7 @@
 package com.Maker.service;
 
-import com.Maker.dao.IllnessRepo;
-import com.Maker.dao.TreatmentPlanRepo;
-import com.Maker.model.Illness;
-import com.Maker.model.Patient;
-import com.Maker.model.PatientTooth;
-import com.Maker.model.TreatmentPlan;
+import com.Maker.dao.*;
+import com.Maker.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,8 +11,25 @@ import java.util.Optional;
 @Repository
 public class TreatmentPlanServiceImp implements TreatmentPlanService {
 
+    //TODO some validation
+
     @Autowired
     private TreatmentPlanRepo treatmentPlanRepo;
+
+    @Autowired
+    private ToothProcedureService toothProcedureService;
+
+
+    @Autowired
+    private ToothProcedureRepo toothProcedureRepo;
+
+    @Autowired
+    private PatientToothRepo patientToothRepo;
+
+    @Autowired
+    private MyProcedureRepo myProcedureRepo;
+
+
 
 
     @Override
@@ -24,9 +37,11 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
         return treatmentPlanRepo.save(treatmentPlan);
     }
 
+
+
     @Override
-    public TreatmentPlan EditTreatmentPlan(TreatmentPlan treatmentPlan) {
-        Optional<TreatmentPlan> optionalOldTreatmentPlan =treatmentPlanRepo.findById(treatmentPlan.getId());
+    public TreatmentPlan EditTreatmentPlan(int tpId,TreatmentPlan treatmentPlan) {
+        Optional<TreatmentPlan> optionalOldTreatmentPlan =treatmentPlanRepo.findById(tpId);
         TreatmentPlan oldPlan=optionalOldTreatmentPlan.get();
         oldPlan.setNotes(treatmentPlan.getNotes());
 //        oldPlan.setProceduresList(treatmentPlan.getProceduresList());
@@ -52,6 +67,83 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
     public List<TreatmentPlan> getAllTreatmentPlanByTooth(PatientTooth patientTooth) {
         return treatmentPlanRepo.findAllByPatientTooth(patientTooth);
     }
+
+    @Override
+    public TreatmentPlan addToothProcedureToTreatmentPlan(int tpId, ToothProcedure toothProcedure) {
+        Optional<TreatmentPlan> optionalOldTreatmentPlan =treatmentPlanRepo.findById(tpId);
+        TreatmentPlan oldPlan=optionalOldTreatmentPlan.get();
+        oldPlan.getToothProcedures().add(toothProcedure);
+        return treatmentPlanRepo.save(oldPlan);
+    }
+
+
+    @Override
+    public TreatmentPlan addToothProcedure(int tpId,int pId,int proId,int PtId, ToothProcedure toothProcedure){
+        ToothProcedure newToothP=  toothProcedure;
+        //Patient link
+        MyProcedure myProcedure = myProcedureRepo.findById(proId);
+        PatientTooth patientTooth=patientToothRepo.findById(PtId).get();
+        TreatmentPlan treatmentPlan=treatmentPlanRepo.findById(tpId).get();
+        newToothP.setPatientTooth(patientTooth);
+        newToothP.setProcedure(myProcedure);
+        newToothP.setTreatmentPlan(treatmentPlan);
+
+        return addToothProcedureToTreatmentPlan(tpId,toothProcedure);
+    }
+
+    @Override
+    public TreatmentPlan removeToothProcedureFromTreatmentPlan(int tpId, int TProcId) {
+        TreatmentPlan treatmentPlan=treatmentPlanRepo.findById(tpId).get();
+        ToothProcedure removedTPro= toothProcedureRepo.findById(TProcId).get();
+        treatmentPlan.getToothProcedures().remove(removedTPro);
+        toothProcedureRepo.delete(removedTPro);
+        return treatmentPlanRepo.save(treatmentPlan);
+
+    }
+
+
+    @Override
+    public ToothProcedure doToothProcedure(int id) {
+        ToothProcedure toothProcedure= toothProcedureRepo.findById(id).get();
+        toothProcedure.setDone(true);
+        return toothProcedureRepo.save(toothProcedure);
+
+    }
+
+
+    @Override
+    public ToothProcedure EditToothProcedureNotes(int id, String newNotes) {
+        ToothProcedure toothProcedure= toothProcedureRepo.findById(id).get();
+        toothProcedure.setNotes(newNotes);
+        return toothProcedureRepo.save(toothProcedure);
+
+    }
+
+
+
+
+    @Override
+    public ToothProcedure getToothProcedure(int id) {
+        return toothProcedureRepo.findById(id).get();
+    }
+
+    @Override
+    public List<ToothProcedure> getAllToothProceduresByPatientTooth(PatientTooth patientTooth) {
+        return toothProcedureRepo.findAllByPatientTooth(patientTooth);
+    }
+
+    @Override
+    public List<ToothProcedure> getAllToothProceduresByProcedure(MyProcedure myProcedure) {
+        return toothProcedureRepo.findAllByMyProcedure(myProcedure);
+    }
+
+    @Override
+    public List<ToothProcedure> getAllToothProceduresByTreatmentPlan(TreatmentPlan treatmentPlan) {
+        return toothProcedureRepo.findAllByTreatmentPlan(treatmentPlan);
+    }
+
+
+
 
 
 }

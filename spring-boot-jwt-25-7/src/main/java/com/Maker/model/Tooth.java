@@ -20,6 +20,8 @@ public class Tooth {
     private String name;
 
 
+
+
     public Tooth(String toothNumber, String type, String name) {
         this.toothNumber = toothNumber;
         this.type = type;

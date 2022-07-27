@@ -1,9 +1,6 @@
 package com.Maker.service;
 
-import com.Maker.model.Illness;
-import com.Maker.model.Patient;
-import com.Maker.model.PatientTooth;
-import com.Maker.model.TreatmentPlan;
+import com.Maker.model.*;
 
 import java.util.List;
 
@@ -11,8 +8,29 @@ public interface TreatmentPlanService {
 
     TreatmentPlan addTreatmentPlan(TreatmentPlan treatmentPlan);
 
-    TreatmentPlan EditTreatmentPlan(TreatmentPlan treatmentPlan);
-    TreatmentPlan getTreatmentPlan(int id);
+    TreatmentPlan EditTreatmentPlan(int tpId ,TreatmentPlan treatmentPlan);
+
+    TreatmentPlan getTreatmentPlan(int tpId);
     List<TreatmentPlan> getAllTreatmentPlanByPatient(Patient patient);
     List<TreatmentPlan> getAllTreatmentPlanByTooth(PatientTooth patientTooth);
+    TreatmentPlan addToothProcedureToTreatmentPlan(int tpId, ToothProcedure toothProcedure);
+
+    TreatmentPlan addToothProcedure(int tpId,int pId,int proId,int PtId, ToothProcedure toothProcedure);
+    TreatmentPlan removeToothProcedureFromTreatmentPlan(int tpId,int TProcId);
+
+    ToothProcedure doToothProcedure(int id);
+
+
+    ToothProcedure EditToothProcedureNotes(int id, String newNotes);
+
+    ToothProcedure getToothProcedure(int id);
+
+
+    List<ToothProcedure> getAllToothProceduresByPatientTooth(PatientTooth patientTooth);
+
+    List<ToothProcedure> getAllToothProceduresByProcedure(MyProcedure myProcedure);
+
+    List<ToothProcedure> getAllToothProceduresByTreatmentPlan(TreatmentPlan treatmentPlan);
+
+
 }

@@ -50,7 +50,8 @@ public class PatientController {
         return ResponseEntity.ok().body(patientToothService.GetPatientTeeth(pId));
     }
 
-    @PostMapping("/searchPatient/{username}")
+
+    @GetMapping("/searchPatient/{username}")
     public ResponseEntity<List<Patient>> getPlan(@PathVariable String username){
         return ResponseEntity.ok().body(patientService.searchPatient(username));
     }

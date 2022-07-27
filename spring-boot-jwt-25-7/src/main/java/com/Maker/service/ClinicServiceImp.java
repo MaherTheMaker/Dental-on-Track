@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClinicServiceImp implements ClinicService {
 
+    //TODO some validation
+
     @Autowired
     private ClinicRepo clinicRepo;
 

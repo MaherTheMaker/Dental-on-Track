@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ToothProcedureRepo extends JpaRepository<ToothProcedure,Integer> {
     List<ToothProcedure> findAllByPatientTooth(PatientTooth patientTooth);
-    List<ToothProcedure> findAllByProcedure(Procedures procedures);
+    List<ToothProcedure> findAllByMyProcedure(MyProcedure myProcedure);
     List<ToothProcedure> findAllByTreatmentPlan(TreatmentPlan treatmentPlan);
 
 

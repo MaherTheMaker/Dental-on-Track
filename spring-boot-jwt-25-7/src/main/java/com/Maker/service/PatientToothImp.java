@@ -14,7 +14,7 @@ import java.util.List;
 public class PatientToothImp implements PatientToothService {
 
 
-
+    //TODO some validation
 
         @Autowired
         private PatientToothRepo patientToothRepo ;
@@ -38,6 +38,17 @@ public class PatientToothImp implements PatientToothService {
     @Override
     public List<PatientTooth> GetPatientTeeth(int pId) {
         return patientToothRepo.findAllByPatientId(pId);
+    }
+
+    @Override
+    public PatientTooth EditPatientTeeth(int PTID, PatientTooth patientTooth) {
+            PatientTooth oldTooth=patientToothRepo.findById(PTID).get();
+            oldTooth.setNotes(patientTooth.getNotes());
+            oldTooth.setColor(oldTooth.getColor());
+            oldTooth.setStatus(oldTooth.getStatus());
+
+        return   patientToothRepo.save(oldTooth);
+
     }
 
 

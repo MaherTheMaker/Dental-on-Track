@@ -1,7 +1,7 @@
 package com.Maker.controller;
 
-import com.Maker.dao.ProceduresRepo;
-import com.Maker.model.Procedures;
+import com.Maker.dao.MyProcedureRepo;
+import com.Maker.model.MyProcedure;
 import com.Maker.service.ProceduresService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,29 +18,32 @@ public class ProceduresController {
     private ProceduresService proceduresService;
 
     @Autowired
-    private ProceduresRepo procedureRepo;
+    private MyProcedureRepo myProcedureRepo;
 
     @GetMapping("/AllProcedure")
-    private ResponseEntity<List<Procedures>> showProcedures() {
-        return ResponseEntity.ok().body(procedureRepo.findAll());
+    private ResponseEntity<List<MyProcedure>> showProcedures() {
+        return ResponseEntity.ok().body(myProcedureRepo.findAll());
     }
 
 
     @PostMapping("/addProcedure")
-    private ResponseEntity<Procedures> addProcedure(@RequestBody Procedures procedure){
-        return ResponseEntity.ok().body(proceduresService.addProcedure(procedure));
+    private ResponseEntity<MyProcedure> addProcedure(@RequestBody MyProcedure myProcedure){
+        return ResponseEntity.ok().body(proceduresService.addProcedure(myProcedure));
     }
 
     @GetMapping("/getProcedure/{name}")
-    private ResponseEntity<Procedures> getProcedure(@PathVariable String name){
-        return ResponseEntity.ok().body(procedureRepo.findByPName(name));
+    private ResponseEntity<MyProcedure> getProcedure(@PathVariable String name){
+        return ResponseEntity.ok().body(myProcedureRepo.findByPName(name));
     }
 
 
     @GetMapping("/editProcedure/{name}")
-    private ResponseEntity<Procedures> getProcedure(@PathVariable String name , @RequestBody Procedures procedure){
-        return ResponseEntity.ok().body(proceduresService.editProcedure(name , procedure));
+    private ResponseEntity<MyProcedure> editProcedure(@PathVariable String name , @RequestBody MyProcedure myProcedure){
+        return ResponseEntity.ok().body(proceduresService.editProcedure(name , myProcedure));
     }
+
+
+
 
 
 

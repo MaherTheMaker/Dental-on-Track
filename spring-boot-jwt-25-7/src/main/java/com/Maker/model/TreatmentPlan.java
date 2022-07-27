@@ -43,9 +43,13 @@ public class TreatmentPlan {
     @OneToMany(mappedBy = "treatmentPlan",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<ToothProcedure> toothProcedures;
 
+    public List<ToothProcedure> getToothProcedures() {
+        return toothProcedures;
+    }
 
-
-
+    public void setToothProcedures(List<ToothProcedure> toothProcedures) {
+        this.toothProcedures = toothProcedures;
+    }
 
     private Date createdAt;
 

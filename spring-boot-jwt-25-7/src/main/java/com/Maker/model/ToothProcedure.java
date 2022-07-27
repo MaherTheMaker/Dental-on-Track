@@ -1,7 +1,6 @@
 package com.Maker.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 
@@ -13,15 +12,15 @@ public class ToothProcedure {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name="PatientTooth_id")
+    @JoinColumn(name="patientTooth_id",nullable = false)
     private PatientTooth patientTooth;
 
     @ManyToOne
-    @JoinColumn(name="procedure_id")
-    private Procedures procedure;
+    @JoinColumn(name="myProcedure_id",nullable = false)
+    private MyProcedure myProcedure;
 
     @ManyToOne
-    @JoinColumn(name="treatmentPlan_id")
+    @JoinColumn(name="treatmentPlan_id",nullable = false)
     @JsonIgnore
     private TreatmentPlan treatmentPlan;
 
@@ -35,9 +34,9 @@ public class ToothProcedure {
     public ToothProcedure() {
     }
 
-    public ToothProcedure(PatientTooth patientTooth, Procedures procedure, float price, boolean isDone, String notes) {
+    public ToothProcedure(PatientTooth patientTooth, MyProcedure myProcedure, float price, boolean isDone, String notes) {
         this.patientTooth = patientTooth;
-        this.procedure = procedure;
+        this.myProcedure = myProcedure;
         this.price = price;
         this.isDone = isDone;
         this.notes = notes;
@@ -57,12 +56,12 @@ public class ToothProcedure {
         this.patientTooth = patientTooth;
     }
 
-    public Procedures getProcedure() {
-        return procedure;
+    public MyProcedure getProcedure() {
+        return myProcedure;
     }
 
-    public void setProcedure(Procedures procedure) {
-        this.procedure = procedure;
+    public void setProcedure(MyProcedure myProcedure) {
+        this.myProcedure = myProcedure;
     }
 
     public float getPrice() {
@@ -87,5 +86,13 @@ public class ToothProcedure {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public TreatmentPlan getTreatmentPlan() {
+        return treatmentPlan;
+    }
+
+    public void setTreatmentPlan(TreatmentPlan treatmentPlan) {
+        this.treatmentPlan = treatmentPlan;
     }
 }

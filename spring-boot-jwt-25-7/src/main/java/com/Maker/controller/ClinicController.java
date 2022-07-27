@@ -156,46 +156,11 @@ public class ClinicController {
             return ResponseEntity.ok(illnessList);
     }
 
-    @GetMapping("/GetTooth/{pid}")
-    public ResponseEntity<List<PatientTooth>> getTeeth(@PathVariable int pid){
-        System.out.printf("before");
-        List<PatientTooth> list= patientToothRepo.findAllByPatientId(pid);
-        System.out.println("here");
-        if(list != null){
-            return ResponseEntity.ok().body(list);
-        }else
-            return ResponseEntity.notFound().build();
-    }
+    // Todo api to get all Teeth for chart
 
 
-//
-//    @PostMapping("addTooth")
-//    public ResponseEntity<Tooth> addTooth(@RequestBody Tooth tooth){
-//        if(toothService.getTooth(tooth.getName())!=null){
-//            return ResponseEntity.accepted().body(toothService.addTooth(tooth));
-//        }
-//        else return ResponseEntity.badRequest().build();
-//    }
-//
-//    @GetMapping("/GetTooth/{name}")
-//    public ResponseEntity<Tooth> getTooth(@PathVariable String name){
-//        Tooth tooth ;
-//        tooth = toothService.getTooth(name);
-//        if(tooth!= null){
-//            return ResponseEntity.ok().body(tooth);
-//        }else
-//            return ResponseEntity.notFound().build();
-//    }
-//
-//    @GetMapping("/GetAllIllnesses")
-//    public ResponseEntity<List<Tooth>> getAllTooth(){
-//        List<Tooth> toothList;
-//        toothList = toothService.getAllTooth();
-//        if(toothList.isEmpty()){
-//            return ResponseEntity.notFound().build();
-//        }else
-//            return ResponseEntity.ok(toothList);
-//    }
+
+
 
 }
 

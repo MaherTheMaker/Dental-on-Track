@@ -1,7 +1,7 @@
 package com.Maker.service;
 
-import com.Maker.dao.ProceduresRepo;
-import com.Maker.model.Procedures;
+import com.Maker.dao.MyProcedureRepo;
+import com.Maker.model.MyProcedure;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -10,34 +10,38 @@ import java.util.List;
 @Repository
 public class ProcedureServiceImp implements ProceduresService {
 
+    //TODO some validation
+
+
     @Autowired
-    private ProceduresRepo prodRepo;
+    private MyProcedureRepo prodRepo;
 
     @Override
-    public Procedures addProcedure(Procedures procedure) {
-        return prodRepo.save(procedure);
+    public MyProcedure addProcedure(MyProcedure myProcedure) {
+        return prodRepo.save(myProcedure);
 
     }
 
     @Override
-    public List<Procedures> ShowProcedure() {
+    public List<MyProcedure> ShowProcedure() {
         return prodRepo.findAll();
     }
 
     @Override
-    public Procedures getProcedure(String name) {
+    public MyProcedure getProcedure(String name) {
         return prodRepo.findByPName(name);
     }
 
     @Override
-    public Procedures editProcedure(String name,Procedures pro) {
+    public MyProcedure editProcedure(String name, MyProcedure pro) {
 
-         Procedures procedure = prodRepo.findByPName(name);
-         procedure.setpName(pro.getpName());
-         procedure.setDefaultPrice(pro.getDefaultPrice());
-         procedure.setDefaultNumberOfAppointments(pro.getDefaultNumberOfAppointments());
-         procedure.setNotes(pro.getNotes());
-         return prodRepo.save(procedure);
+         MyProcedure myProcedure = prodRepo.findByPName(name);
+         myProcedure.setpName(pro.getpName());
+         myProcedure.setDefaultPrice(pro.getDefaultPrice());
+         myProcedure.setDefaultNumberOfAppointments(pro.getDefaultNumberOfAppointments());
+         myProcedure.setNotes(pro.getNotes());
+         return prodRepo.save(myProcedure);
     }
+
 
 }

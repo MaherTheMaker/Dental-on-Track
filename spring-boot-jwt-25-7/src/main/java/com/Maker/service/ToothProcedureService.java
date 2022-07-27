@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface ToothProcedureService {
 
-    ToothProcedure addToothProcedure(ToothProcedure toothProcedure);
-
 
     ToothProcedure doToothProcedure(int id);
 
@@ -17,8 +15,9 @@ public interface ToothProcedureService {
 
     List<ToothProcedure> getAllToothProceduresByPatientTooth(PatientTooth patientTooth);
 
-    List<ToothProcedure> getAllToothProceduresByProcedure(Procedures procedures);
+    List<ToothProcedure> getAllToothProceduresByProcedure(MyProcedure myProcedure);
 
     List<ToothProcedure> getAllToothProceduresByTreatmentPlan(TreatmentPlan treatmentPlan);
+
 
 }

@@ -15,6 +15,8 @@ import java.util.List;
 @Repository
 public class AppointmentServiceImp implements AppointmentService {
 
+    //TODO some validation
+
     @Autowired
     private AppointmentRepo appointmentRepo;
 
@@ -24,7 +26,7 @@ public class AppointmentServiceImp implements AppointmentService {
 
     @Override
     public Appointment addAppointment(Appointment appointment) {
-        //todo how can i know that the saving done correctly
+
 
         return appointmentRepo.save(appointment);
 
@@ -51,14 +53,16 @@ public class AppointmentServiceImp implements AppointmentService {
         else return appointment1;
     }
 
+
     @Override
     public Appointment editAppointment(int id,Appointment appointment) {
         Appointment appointment1 = appointmentRepo.findById(id).get();
-        appointment1.setPatient(appointment.getPatient());
         appointment1.setDate(appointment.getDate());
         appointment1.setStartTime(appointment.getStartTime());
         appointment1.setEndTime(appointment.getEndTime());
         appointment1.setNotes(appointment.getNotes());
         return appointment1;
     }
+
+
 }
