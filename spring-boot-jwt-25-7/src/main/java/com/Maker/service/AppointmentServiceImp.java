@@ -3,6 +3,7 @@ package com.Maker.service;
 import com.Maker.dao.AppointmentRepo;
 import com.Maker.dao.PatientRepo;
 import com.Maker.model.Appointment;
+import com.Maker.model.NotFoundException;
 import com.Maker.model.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.parameters.P;
@@ -21,7 +22,7 @@ public class AppointmentServiceImp implements AppointmentService {
     private AppointmentRepo appointmentRepo;
 
     @Autowired
-    private PatientRepo patientRepo;
+    private PatientService patientService;
 
 
     @Override
@@ -35,7 +36,7 @@ public class AppointmentServiceImp implements AppointmentService {
     @Override
     public List<Appointment> getAllPatientAppointment(int pid) {
 
-        Patient patient = patientRepo.findById(pid);
+        Patient patient = patientService.getPatient(pid);
         List<Appointment>  appointment1 = appointmentRepo.findAllByPatient(patient);
         if(appointment1==null){
             return null;
@@ -48,7 +49,7 @@ public class AppointmentServiceImp implements AppointmentService {
         List<Appointment> appointment1;
         appointment1 = appointmentRepo.findAllByDate(date);
         if(appointment1==null){
-            return null;
+            throw new NotFoundException("No Appointment Found in this Date");
         }
         else return appointment1;
     }
@@ -56,7 +57,9 @@ public class AppointmentServiceImp implements AppointmentService {
 
     @Override
     public Appointment editAppointment(int id,Appointment appointment) {
-        Appointment appointment1 = appointmentRepo.findById(id).get();
+        Appointment appointment1 = appointmentRepo.findById(id).orElseThrow(()->
+                new NotFoundException("Appointment not found"));
+
         appointment1.setDate(appointment.getDate());
         appointment1.setStartTime(appointment.getStartTime());
         appointment1.setEndTime(appointment.getEndTime());

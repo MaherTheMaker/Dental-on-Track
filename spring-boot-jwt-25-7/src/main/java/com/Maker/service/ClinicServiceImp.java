@@ -26,12 +26,13 @@ public class ClinicServiceImp implements ClinicService {
     @Override
     public Clinic editInfo(Clinic clinic) {
         Clinic old= clinicRepo.findById(clinic.getId());
-        old.setClinicAddress(clinic.getClinicAddress());
-        old.setClinicName(clinic.getClinicName());
-        old.setClinicPhone(clinic.getClinicPhone());
-        old.setMobilePhone(clinic.getMobilePhone());
-
-        return  clinicRepo.save(old);
+        if(old != null) {
+            old.setClinicAddress(clinic.getClinicAddress());
+            old.setClinicName(clinic.getClinicName());
+            old.setClinicPhone(clinic.getClinicPhone());
+            old.setMobilePhone(clinic.getMobilePhone());
+            return clinicRepo.save(old);
+        } else throw new NotFoundException("no Clinic with this information");
 
 
     }
@@ -58,21 +59,26 @@ public class ClinicServiceImp implements ClinicService {
 
     @Override
     public DAOUser changePassword(String username, String newPass) {
-
         DAOUser daoUser= userDao.findByUsername(username);
-        daoUser.setPassword(bcryptEncoder.encode(newPass));
-        return userDao.save(daoUser);
+        if(daoUser !=null) {
+            daoUser.setPassword(bcryptEncoder.encode(newPass));
+            return userDao.save(daoUser);
+        }
+        else throw new NotFoundException("there is no user with this username");
     }
 
     @Override
     public DAOUser changeUserInfo(DAOUser daoUser) {
-        DAOUser daoUser1 = userDao.findById(daoUser.getId());
-        daoUser1.setFullName(daoUser.getFullName());
-        daoUser1.setAddress(daoUser.getAddress());
-        daoUser1.setRole(daoUser.getRole());
-        daoUser1.setNumber(daoUser.getNumber());
-        daoUser1.setEmail(daoUser.getEmail());
-        return userDao.save(daoUser1);
+        DAOUser daoUser1 = userDao.findById(daoUser.getId()) ;
+        if(daoUser1 != null) {
+            daoUser1.setFullName(daoUser.getFullName());
+            daoUser1.setAddress(daoUser.getAddress());
+            daoUser1.setRole(daoUser.getRole());
+            daoUser1.setNumber(daoUser.getNumber());
+            daoUser1.setEmail(daoUser.getEmail());
+            return userDao.save(daoUser1) ;
+        }
+        else throw new NotFoundException("User Not Found");
     }
 
 

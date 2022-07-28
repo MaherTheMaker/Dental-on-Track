@@ -26,8 +26,16 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
     @Autowired
     private PatientToothRepo patientToothRepo;
 
+
+    @Autowired
+    private ProceduresService procedureService;
+
     @Autowired
     private MyProcedureRepo myProcedureRepo;
+
+
+    @Autowired
+    private PatientService patientService;
 
 
 
@@ -41,20 +49,19 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
 
     @Override
     public TreatmentPlan EditTreatmentPlan(int tpId,TreatmentPlan treatmentPlan) {
+
         Optional<TreatmentPlan> optionalOldTreatmentPlan =treatmentPlanRepo.findById(tpId);
         TreatmentPlan oldPlan=optionalOldTreatmentPlan.get();
         oldPlan.setNotes(treatmentPlan.getNotes());
 //        oldPlan.setProceduresList(treatmentPlan.getProceduresList());
-
-
-
         return treatmentPlanRepo.save(oldPlan);
     }
 
     @Override
     public TreatmentPlan getTreatmentPlan(int id) {
 
-        return treatmentPlanRepo.findById(id).get();
+        return treatmentPlanRepo.findById(id).orElseThrow(()->
+                new NotFoundException("Treatment PLan Not Found"));
     }
 
     @Override
@@ -78,12 +85,16 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
 
 
     @Override
-    public TreatmentPlan addToothProcedure(int tpId,int pId,int proId,int PtId, ToothProcedure toothProcedure){
-        ToothProcedure newToothP=  toothProcedure;
+    public TreatmentPlan addToothProcedure(int tpId,int pId,int proId,int PtId, ToothProcedure toothProcedure) {
+        ToothProcedure newToothP = toothProcedure;
         //Patient link
         MyProcedure myProcedure = myProcedureRepo.findById(proId);
-        PatientTooth patientTooth=patientToothRepo.findById(PtId).get();
-        TreatmentPlan treatmentPlan=treatmentPlanRepo.findById(tpId).get();
+        PatientTooth patientTooth = patientToothRepo.findById(PtId).get();
+        TreatmentPlan treatmentPlan = treatmentPlanRepo.findById(tpId).get();
+        if (myProcedure == null || patientTooth.getColor() != null || treatmentPlan.getPatient().getFullName() == null)
+        {
+            throw new NotFoundException("Procedure, Patient tooth or Treatment Plan not found ");
+        }
         newToothP.setPatientTooth(patientTooth);
         newToothP.setProcedure(myProcedure);
         newToothP.setTreatmentPlan(treatmentPlan);
@@ -93,12 +104,11 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
 
     @Override
     public TreatmentPlan removeToothProcedureFromTreatmentPlan(int tpId, int TProcId) {
-        TreatmentPlan treatmentPlan=treatmentPlanRepo.findById(tpId).get();
-        ToothProcedure removedTPro= toothProcedureRepo.findById(TProcId).get();
+        TreatmentPlan treatmentPlan=treatmentPlanRepo.findById(tpId).orElseThrow(()->new NotFoundException("Treatment Plan not found"));
+        ToothProcedure removedTPro= toothProcedureRepo.findById(TProcId).orElseThrow(()->new NotFoundException("Tooth Procedure not found"));
         treatmentPlan.getToothProcedures().remove(removedTPro);
         toothProcedureRepo.delete(removedTPro);
         return treatmentPlanRepo.save(treatmentPlan);
-
     }
 
 

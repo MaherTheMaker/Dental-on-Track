@@ -38,6 +38,8 @@ public class PatientServiceImp implements PatientService {
 
     @Override
     public Patient addPatient(Patient patient) {
+        //No need To validate Existing Patient because patient can be more than one with the same name
+
         return
                 patientRepo.save(patient);
     }
@@ -82,48 +84,47 @@ public class PatientServiceImp implements PatientService {
 
     @Override
     public List<Patient> searchPatient(String name) {
-        return patientRepo.findAllByFullNameContaining(name);
-
+        List<Patient> patient = patientRepo.findAllByFullName(name);
+        if(patient.isEmpty()){
+            throw new NotFoundException("No Patient with this name");
+        }
+        else return patient;
     }
 
     @Override
-    public Patient getPatient(int id) {
-        return patientRepo.findById(id);
+    public Patient getPatient(Integer id) {
+        return patientRepo.findById(id).orElseThrow(
+                ()-> new NotFoundException("Patient not Found")
+        );
     }
 
     @Override
     public Image addImage(int pId, Image image) {
-        Patient patient= patientRepo.findById(pId);
+        Patient patient= getPatient(pId);
         image.setPatient(patient);
         Image im = imageRepo.save(image);
-        if (im!=null){
-           patient.getGallery().add(image);
-        }
+        patient.getGallery().add(image);
         return im;
     }
 
     @Override
     public File addFile(int pId, File file) {
-        Patient patient = patientRepo.findById(pId);
+        Patient patient = getPatient(pId);
         file.setPatient(patient);
         File fi = fileRepo.save(file);
-        if (fi!=null){
-            patient.getFilesList().add(file);
-        }
+        patient.getFilesList().add(file);
         return fi;
     }
 
     @Override
     public MedHistory addMedHis(int pId,int IID,String notes) {
-        Patient patient = patientRepo.findById(pId);
+        Patient patient = getPatient(pId);
         Illness illness =illnessService.getIllness(IID);
-        MedHistory medHistory=new MedHistory();
+        MedHistory medHistory = new MedHistory();
         medHistory.setIllness(illness);
         medHistory.setPatient(patient);
         MedHistory me = medHisRepo.save(medHistory);
-        if (me!=null){
-            patient.getMedHistoryList().add(medHistory);
-        }
+        patient.getMedHistoryList().add(medHistory);
         return me;
     }
 

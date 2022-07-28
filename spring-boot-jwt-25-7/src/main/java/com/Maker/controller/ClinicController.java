@@ -129,31 +129,18 @@ public class ClinicController {
 
     @PostMapping("/AddIllness")
     public ResponseEntity<Illness> addIllness(@RequestBody Illness illness){
-        if(illnessService.getIllness(illness.getName()) == null){
-            return ResponseEntity.accepted().body(illnessService.addIllness(illness));
-        }else
-            return ResponseEntity.noContent().build();
+       return ResponseEntity.accepted().body(illnessService.addIllness(illness));
     }
 
 
     @GetMapping("/GetIllness/{name}")
-    public ResponseEntity<Illness> getIllness(@PathVariable String name){
-        Illness illness ;
-        illness = illnessService.getIllness(name);
-        if(illness != null){
-            return ResponseEntity.ok().body(illness);
-        }else
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<Illness> getIllness(@PathVariable String name){;
+        return ResponseEntity.ok().body(illnessService.getIllness(name));
     }
 
     @GetMapping("/GetAllIllnesses")
     public ResponseEntity<List<Illness>> getAllIllnesses(){
-        List<Illness> illnessList;
-        illnessList = illnessService.getAllIllness();
-        if(illnessList.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }else
-            return ResponseEntity.ok(illnessList);
+        return ResponseEntity.ok(illnessService.getAllIllness());
     }
 
     // Todo api to get all Teeth for chart

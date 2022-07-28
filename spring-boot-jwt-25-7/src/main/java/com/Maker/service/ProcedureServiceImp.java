@@ -2,6 +2,8 @@ package com.Maker.service;
 
 import com.Maker.dao.MyProcedureRepo;
 import com.Maker.model.MyProcedure;
+import com.Maker.model.NotFoundException;
+import com.Maker.model.ObjectAlreadyExist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +12,7 @@ import java.util.List;
 @Repository
 public class ProcedureServiceImp implements ProceduresService {
 
-    //TODO some validation
+    //TODO some validation...Done
 
 
     @Autowired
@@ -18,7 +20,12 @@ public class ProcedureServiceImp implements ProceduresService {
 
     @Override
     public MyProcedure addProcedure(MyProcedure myProcedure) {
-        return prodRepo.save(myProcedure);
+        MyProcedure procedure1 = prodRepo.findByPName(myProcedure.getpName());
+        if(procedure1 ==null){
+
+            return prodRepo.save(myProcedure);
+
+        }else throw new ObjectAlreadyExist("Procedure Already Exists");
 
     }
 
@@ -29,18 +36,23 @@ public class ProcedureServiceImp implements ProceduresService {
 
     @Override
     public MyProcedure getProcedure(String name) {
-        return prodRepo.findByPName(name);
+        MyProcedure procedures = prodRepo.findByPName(name);
+        if(procedures == null )
+        {
+            throw new NotFoundException("Procedure Not Found");
+        }else
+            return procedures;
     }
 
     @Override
     public MyProcedure editProcedure(String name, MyProcedure pro) {
 
-         MyProcedure myProcedure = prodRepo.findByPName(name);
-         myProcedure.setpName(pro.getpName());
-         myProcedure.setDefaultPrice(pro.getDefaultPrice());
-         myProcedure.setDefaultNumberOfAppointments(pro.getDefaultNumberOfAppointments());
-         myProcedure.setNotes(pro.getNotes());
-         return prodRepo.save(myProcedure);
+        MyProcedure procedure = getProcedure(name);
+        procedure.setpName(pro.getpName());
+        procedure.setDefaultPrice(pro.getDefaultPrice());
+        procedure.setDefaultNumberOfAppointments(pro.getDefaultNumberOfAppointments());
+        procedure.setNotes(pro.getNotes());
+        return prodRepo.save(procedure);
     }
 
 

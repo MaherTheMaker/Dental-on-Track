@@ -47,7 +47,7 @@ public class PatientToothImp implements PatientToothService {
             oldTooth.setColor(oldTooth.getColor());
             oldTooth.setStatus(oldTooth.getStatus());
 
-        return   patientToothRepo.save(oldTooth);
+            return   patientToothRepo.save(oldTooth);
 
     }
 

@@ -13,7 +13,7 @@ public interface PatientService {
     Patient DiagnosisOrEdit(Patient patient,int pId);
     List<Patient> searchPatient(String name);
 
-    Patient getPatient(int id);
+    Patient getPatient(Integer id);
 
     Image addImage(int pId ,Image image);
     File addFile(int pId , File file);

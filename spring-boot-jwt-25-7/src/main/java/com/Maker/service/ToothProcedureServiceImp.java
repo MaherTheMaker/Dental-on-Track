@@ -32,7 +32,7 @@ public class ToothProcedureServiceImp implements ToothProcedureService {
 
     @Override
     public ToothProcedure getToothProcedure(int id) {
-        return toothProcedureRepo.findById(id).get();
+        return toothProcedureRepo.findById(id).orElseThrow(()-> new NotFoundException("Tooth Procedure not Found"));
     }
 
     @Override
