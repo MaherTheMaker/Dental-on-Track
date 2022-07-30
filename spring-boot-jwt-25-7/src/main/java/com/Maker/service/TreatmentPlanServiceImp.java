@@ -42,6 +42,7 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
 
     @Override
     public TreatmentPlan addTreatmentPlan(TreatmentPlan treatmentPlan) {
+       //no need to check if there is an exists treatment plan
         return treatmentPlanRepo.save(treatmentPlan);
     }
 
@@ -60,8 +61,10 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
     @Override
     public TreatmentPlan getTreatmentPlan(int id) {
 
-        return treatmentPlanRepo.findById(id).orElseThrow(()->
-                new NotFoundException("Treatment PLan Not Found"));
+       Boolean treatmentPlan = treatmentPlanRepo.findById(id).isPresent();
+       if(treatmentPlan.equals(false)) {
+           return treatmentPlanRepo.findById(id).get();
+       }else throw new NotFoundException("treatment Plan not found");
     }
 
     @Override
@@ -91,7 +94,7 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
         MyProcedure myProcedure = myProcedureRepo.findById(proId);
         PatientTooth patientTooth = patientToothRepo.findById(PtId).get();
         TreatmentPlan treatmentPlan = treatmentPlanRepo.findById(tpId).get();
-        if (myProcedure == null || patientTooth.getColor() != null || treatmentPlan.getPatient().getFullName() == null)
+        if (myProcedure == null || !patientToothRepo.existsById(PtId) || !treatmentPlanRepo.existsById(tpId))
         {
             throw new NotFoundException("Procedure, Patient tooth or Treatment Plan not found ");
         }
@@ -134,8 +137,10 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
 
     @Override
     public ToothProcedure getToothProcedure(int id) {
-        return toothProcedureRepo.findById(id).get();
-    }
+        if(toothProcedureRepo.existsById(id)) {
+            return toothProcedureRepo.findById(id).get();
+        }
+        else throw new NotFoundException("NO ToothProcedure found with this info ");}
 
     @Override
     public List<ToothProcedure> getAllToothProceduresByPatientTooth(PatientTooth patientTooth) {
@@ -151,6 +156,9 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
     public List<ToothProcedure> getAllToothProceduresByTreatmentPlan(TreatmentPlan treatmentPlan) {
         return toothProcedureRepo.findAllByTreatmentPlan(treatmentPlan);
     }
+
+
+
 
 
 

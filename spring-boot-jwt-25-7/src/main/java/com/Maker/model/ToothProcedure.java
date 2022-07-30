@@ -24,6 +24,7 @@ public class ToothProcedure {
     @JsonIgnore
     private TreatmentPlan treatmentPlan;
 
+
     private float price;
 
     private boolean isDone=false;

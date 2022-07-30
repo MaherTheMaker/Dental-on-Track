@@ -28,9 +28,14 @@ public class Patient {
 
     //Todo move to separate table
 
-    Date lastVisitToADoctor;
-    String careWays;
-    String habits;
+    private Date lastVisitToADoctor;
+    private String careWays;
+    private String habits;
+
+    @OneToMany(mappedBy = "daoUser",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Recep> receps;
+
+
 
     public Patient(String fullName, Gender gender, String phoneNumber, String email, String address, short age, Boolean deciduousTeeth, String familyStatus, float balance, String discountType, Date lastVisitToADoctor, String careWays, String habits, List<Image> gallery, List<File> filesList) {
         this.fullName = fullName;
@@ -182,8 +187,9 @@ public class Patient {
         this.discountType = discountType;
     }
 
-        @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
-        private List<Image> gallery;
+
+  @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Image> gallery;
 
     public List<Image> getGallery() {
         return gallery;
