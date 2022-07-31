@@ -19,30 +19,44 @@ public class Expenses {
     @JsonIgnore
     private DAOUser daoUser;
 
+    @Column(nullable = false)
     private String daoUserName;
 
+    @Column(nullable = false)
     private Date date;
 
+    @Column(nullable = false)
     private float totalPrice;
-
+    @Column(nullable = false)
     private String details;
+
+
+    @Column(nullable = false)
+    private String safeName;
 
     @ManyToOne
     @JoinColumn(name = "moneySafe_id",nullable = false)
     @JsonIgnore
     private MoneySafe moneySafe;
 
-    public Expenses(DAOUser daoUser, Date date, float totalPrice, String details) {
-        this.daoUser = daoUser;
-        this.daoUserName = daoUser.getFullName();
+    public Expenses( String daoUserName, Date date, float totalPrice, String details,String safeName) {
+        this.daoUserName = daoUserName;
         this.date = date;
         this.totalPrice = totalPrice;
         this.details = details;
-    }
+        this.safeName = safeName;
 
+    }
     public Expenses() {
     }
 
+    public MoneySafe getMoneySafe() {
+        return moneySafe;
+    }
+
+    public void setMoneySafe(MoneySafe moneySafe) {
+        this.moneySafe = moneySafe;
+    }
 
     public DAOUser getDaoUser() {
 
@@ -85,5 +99,11 @@ public class Expenses {
         this.details = details;
     }
 
+    public String getSafeName() {
+        return safeName;
+    }
 
+    public void setSafeName(String safeName) {
+        this.safeName = safeName;
+    }
 }

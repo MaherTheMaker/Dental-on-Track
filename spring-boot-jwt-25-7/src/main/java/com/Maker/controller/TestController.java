@@ -2,14 +2,16 @@ package com.Maker.controller;
 
 
 
+import com.Maker.model.Expenses;
 import com.Maker.model.MoneySafe;
-import com.Maker.model.MyProcedure;
 import com.Maker.model.Receipt;
+import com.Maker.model.ReceiptForm;
+import com.Maker.service.ExpensesForm;
+import com.Maker.service.ExpensesService;
 import com.Maker.service.MoneySafeService;
 import com.Maker.service.ReceiptService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +26,10 @@ public class TestController {
 
     @Autowired
     private ReceiptService receiptService;
+
+
+    @Autowired
+    private ExpensesService expensesService;
 
 
     @PostMapping("/AddSafe/{uID}")
@@ -77,9 +83,10 @@ public class TestController {
 
 
     @GetMapping("/Receipt/getByDate")
-    private ResponseEntity<List<Receipt>> getAllReceiptByDate(@RequestBody Date date){
+    private ResponseEntity<List<Receipt>> getAllReceiptByDate(@RequestBody date date1){
 
-        return ResponseEntity.ok().body(receiptService.getAllReceipt(date));
+
+        return ResponseEntity.ok().body(receiptService.getAllReceipt(date1.date));
 
     }
 
@@ -89,7 +96,63 @@ public class TestController {
     }
 
 
+    //Expenses
+    @PostMapping("/expenses/add")
+    private ResponseEntity<Expenses> addExpense(@RequestBody ExpensesForm expenses){
 
+        return ResponseEntity.accepted().body(expensesService.add(expenses));
+
+    }
+
+    @GetMapping("/expense/{id}/getExpense")
+    private ResponseEntity<Expenses> getExpense(@PathVariable int id ){
+        return ResponseEntity.ok().body(expensesService.getExpense(id));
+    }
+
+    @GetMapping("/expense/getByDate")
+    private ResponseEntity<List<Expenses>> getAllExpensesByDate(@RequestBody date date1){
+
+
+        return ResponseEntity.ok().body(expensesService.getExpenses(date1.date));
+
+    }
+
+    @GetMapping("/expense/getBySafe")
+    private ResponseEntity<List<Expenses>> getAllExpensesBySafe(@RequestBody String safeName){
+
+
+        return ResponseEntity.ok().body(expensesService.getMoneySafeExpenses(safeName));
+
+    }
+
+    @GetMapping("/expense/getBySafeAndDate")
+    private ResponseEntity<List<Expenses>> getMoneySafeExpensesInDate(@RequestBody DateAndSafeName dateAndSafeName){
+
+
+        return ResponseEntity.ok().body(expensesService.getMoneySafeExpensesInDate(dateAndSafeName.safeName,dateAndSafeName.d));
+
+    }
+
+
+    //TRANSACTION
+
+
+
+
+
+
+}
+
+@Data
+class date {
+    Date date;
+}
+
+
+@Data
+class DateAndSafeName{
+    Date d;
+    String safeName;
 }
 
 

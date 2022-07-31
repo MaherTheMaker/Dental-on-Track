@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface ExpensesService {
-    Expenses add(Expenses expenses);
+    Expenses add(ExpensesForm expenses);
     Expenses getExpense(int id);
     List<Expenses> getExpenses(Date date);
     List<Expenses> getMoneySafeExpenses(String safeName);

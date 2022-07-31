@@ -1,13 +1,11 @@
 package com.Maker.service;
 
 
-import com.Maker.controller.ReceiptForm;
+import com.Maker.model.ReceiptForm;
 import com.Maker.dao.ReceiptRepo;
 import com.Maker.dao.UserDao;
-import com.Maker.model.MoneySafe;
 import com.Maker.model.NotFoundException;
 import com.Maker.model.Receipt;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

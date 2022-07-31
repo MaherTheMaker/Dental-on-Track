@@ -28,13 +28,12 @@ public class Transaction {
     private String safeName;
 
 
-    public Transaction(DAOUser daoUser, MoneySafe safe, Date date, String userName, String safeName) {
-        this.daoUser = daoUser;
-        this.safe = safe;
+    public Transaction(Date date, String userName, String safeName) {
         this.date = date;
-        this.userName = daoUser.getUsername();
-        this.safeName = safe.getName();
+        this.userName = userName;
+        this.safeName = safeName;
     }
+
 
     public Transaction() {
     }

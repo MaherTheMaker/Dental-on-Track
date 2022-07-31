@@ -1,4 +1,4 @@
-package com.Maker.controller;
+package com.Maker.model;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -6,13 +6,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 
 public class ReceiptForm {
-
-    public String Username;
+   public String Username;
    public String safeName;
-  public  String procedureName;
-    @JsonFormat(pattern = "yyyy-mm-dd")
-     public Date date;
-  public  float total;
+   public  String procedureName;
+
+   public Date date;
+   public  float total;
 
     public ReceiptForm(String username, String safeName, String procedureName, Date date, float total) {
         Username = username;
