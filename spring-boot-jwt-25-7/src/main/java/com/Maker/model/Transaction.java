@@ -21,17 +21,18 @@ public class Transaction {
     @JsonIgnore
     private MoneySafe safe;
 
+
     private String userName;
 
-    private int safeId;
+    private String safeName;
 
 
-    public Transaction(DAOUser daoUser, String userName, int safeId) {
+    public Transaction(DAOUser daoUser, MoneySafe safe) {
         this.daoUser = daoUser;
-        this.userName = userName;
-        this.safeId = safeId;
+        this.safe = safe;
+        this.userName = daoUser.getUsername();
+        this.safeName = safe.getName();
     }
-
 
     public Transaction() {
     }
@@ -53,11 +54,11 @@ public class Transaction {
         userName = UserName;
     }
 
-    public int getSafeId() {
-        return safeId;
+    public String getSafeId() {
+        return safeName;
     }
 
-    public void setSafeId(int safeId) {
-        this.safeId = safeId;
+    public void setSafeId(String safeName) {
+        this.safeName = safeName;
     }
 }

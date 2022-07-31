@@ -10,26 +10,51 @@ public class MoneySafe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private String name;
 
+    //todo one to one
     @OneToMany(mappedBy = "safe", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<DAOUser> daoUsers ;
 
+    private String type;
 
     private float balance;
+
+    private List<Receipt> receipt;
 
 
     @OneToMany(mappedBy = "safe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Transaction> transactionList;
 
 
-    public MoneySafe(List<DAOUser> daoUsers, float balance, List<Transaction> transactionList) {
+    public MoneySafe(String name, List<DAOUser> daoUsers, String type, float balance, List<Receipt> receipt, List<Transaction> transactionList) {
+        this.name = name;
         this.daoUsers = daoUsers;
+        this.type = type;
         this.balance = balance;
+        this.receipt = receipt;
         this.transactionList = transactionList;
     }
 
 
+
     public MoneySafe() {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public List<DAOUser> getDaoUsers() {
@@ -61,5 +86,11 @@ public class MoneySafe {
         return id;
     }
 
+    public List<Receipt> getReceipt() {
+        return receipt;
+    }
 
+    public void setReceipt(List<Receipt> receipt) {
+        this.receipt = receipt;
+    }
 }

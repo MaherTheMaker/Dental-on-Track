@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Recep {
+public class Receipt {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,34 +35,46 @@ public class Recep {
     private Float Total;
 
 
-    private String details;
+    @ManyToOne
+    @JoinColumn(name = "moneySafe_id",nullable = false)
+    @JsonIgnore
+    private MoneySafe moneySafe;
 
-    public Recep( Patient patient, DAOUser daoUser, Float total, String details) {
+
+    @OneToMany(mappedBy = "receipt",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<ToothProcedure> procedure ;
+
+
+    public Receipt( Patient patient, DAOUser daoUser, Float total, MoneySafe moneySafe, List<ToothProcedure> procedure) {
         this.userName = daoUser.getUsername();
         this.patientName = patient.getFullName();
         this.patient = patient;
         this.daoUser = daoUser;
         Total = total;
-        this.details = details;
+        this.moneySafe = moneySafe;
+        this.procedure = procedure;
     }
 
-    public Recep() {
+
+
+    public Receipt() {
     }
 
     public String getUserName() {
         return userName;
     }
 
-    public String getDetails() {
-        return details;
-    }
 
     public int getId() {
         return id;
     }
 
-    public void setDetails(String details) {
-        this.details = details;
+    public List<ToothProcedure> getProcedure() {
+        return procedure;
+    }
+
+    public void setProcedure(List<ToothProcedure> procedure) {
+        this.procedure = procedure;
     }
 
     public void setUserName(String userName) {
@@ -99,5 +111,13 @@ public class Recep {
 
     public void setTotal(Float total) {
         Total = total;
+    }
+
+    public MoneySafe getMoneySafe() {
+        return moneySafe;
+    }
+
+    public void setMoneySafe(MoneySafe moneySafe) {
+        this.moneySafe = moneySafe;
     }
 }

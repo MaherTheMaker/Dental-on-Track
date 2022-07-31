@@ -24,6 +24,11 @@ public class ToothProcedure {
     @JsonIgnore
     private TreatmentPlan treatmentPlan;
 
+    @ManyToOne
+    @JoinColumn(name="receipt_id",nullable = false)
+    @JsonIgnore
+    private Receipt receipt;
+
 
     private float price;
 

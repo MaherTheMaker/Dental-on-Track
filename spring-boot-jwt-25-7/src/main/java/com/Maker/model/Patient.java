@@ -33,7 +33,7 @@ public class Patient {
     private String habits;
 
     @OneToMany(mappedBy = "daoUser",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Recep> receps;
+    private List<Receipt> receps;
 
 
 

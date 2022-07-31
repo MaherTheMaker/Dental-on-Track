@@ -3,7 +3,6 @@ package com.Maker.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.security.AllPermission;
 import java.util.List;
 
 @Entity
@@ -33,7 +32,7 @@ public class DAOUser {
 	private List<Expenses> expenses;
 
 	@OneToMany(mappedBy = "daoUser",cascade = CascadeType.ALL,orphanRemoval = true)
-	private List<Recep> receps;
+	private List<Receipt> receps;
 
 	private Role role;
 
