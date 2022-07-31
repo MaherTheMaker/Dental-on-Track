@@ -3,6 +3,7 @@ package com.Maker.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Transaction {
@@ -21,15 +22,16 @@ public class Transaction {
     @JsonIgnore
     private MoneySafe safe;
 
-
+    private Date date;
     private String userName;
 
     private String safeName;
 
 
-    public Transaction(DAOUser daoUser, MoneySafe safe) {
+    public Transaction(DAOUser daoUser, MoneySafe safe, Date date, String userName, String safeName) {
         this.daoUser = daoUser;
         this.safe = safe;
+        this.date = date;
         this.userName = daoUser.getUsername();
         this.safeName = safe.getName();
     }
@@ -59,6 +61,38 @@ public class Transaction {
     }
 
     public void setSafeId(String safeName) {
+        this.safeName = safeName;
+    }
+
+    public MoneySafe getSafe() {
+        return safe;
+    }
+
+    public void setSafe(MoneySafe safe) {
+        this.safe = safe;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getSafeName() {
+        return safeName;
+    }
+
+    public void setSafeName(String safeName) {
         this.safeName = safeName;
     }
 }

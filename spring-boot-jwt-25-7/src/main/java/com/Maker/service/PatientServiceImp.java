@@ -95,9 +95,9 @@ public class PatientServiceImp implements PatientService {
 
     @Override
     public Patient getPatient(Integer id) {
-        return patientRepo.findById(id).orElseThrow(
-                ()-> new NotFoundException("Patient not Found")
-        );
+        if(patientRepo.existsById(id))
+        return patientRepo.findById(id).get();
+        else throw new NotFoundException("Patient NotFound");
     }
 
     @Override

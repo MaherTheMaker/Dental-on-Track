@@ -1,8 +1,11 @@
 package com.Maker.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -14,20 +17,26 @@ public class Receipt {
 
 
 
+    @Column(nullable = false)
     private String userName;
 
+    @Column(nullable = false)
     private String patientName;
 
 
+    @Column(nullable = false)
+    private String safeName;
+
+
     @ManyToOne
-    @JoinColumn(name = "patient_id",nullable = false)
+    @JoinColumn(name = "patient_id")
     @JsonIgnore
     private Patient patient;
 
 
 
     @ManyToOne
-    @JoinColumn(name = "daoUser_id",nullable = false)
+    @JoinColumn(name = "daoUser_id")
     @JsonIgnore
     private DAOUser daoUser;
 
@@ -36,26 +45,28 @@ public class Receipt {
 
 
     @ManyToOne
-    @JoinColumn(name = "moneySafe_id",nullable = false)
+    @JoinColumn(name = "moneySafe_id")
     @JsonIgnore
     private MoneySafe moneySafe;
 
 
+    private Date date;
+
     @OneToMany(mappedBy = "receipt",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<ToothProcedure> procedure ;
+    private List<ToothProcedure> procedure;
 
 
-    public Receipt( Patient patient, DAOUser daoUser, Float total, MoneySafe moneySafe, List<ToothProcedure> procedure) {
-        this.userName = daoUser.getUsername();
-        this.patientName = patient.getFullName();
+    public Receipt(String userName, String patientName, String safeName, Patient patient, DAOUser daoUser, Float total, MoneySafe moneySafe, Date date, List<ToothProcedure> procedure) {
+        this.userName = userName;
+        this.patientName = patientName;
+        this.safeName = safeName;
         this.patient = patient;
         this.daoUser = daoUser;
         Total = total;
         this.moneySafe = moneySafe;
+        this.date = date;
         this.procedure = procedure;
     }
-
-
 
     public Receipt() {
     }
@@ -120,4 +131,25 @@ public class Receipt {
     public void setMoneySafe(MoneySafe moneySafe) {
         this.moneySafe = moneySafe;
     }
+
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+
+    public String getSafeName() {
+        return safeName;
+    }
+
+    public void setSafeName(String safeName) {
+        this.safeName = safeName;
+    }
 }
+
+
+
