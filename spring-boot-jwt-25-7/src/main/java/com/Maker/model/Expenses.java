@@ -27,6 +27,10 @@ public class Expenses {
 
     private String details;
 
+    @ManyToOne
+    @JoinColumn(name = "moneySafe_id",nullable = false)
+    @JsonIgnore
+    private MoneySafe moneySafe;
 
     public Expenses(DAOUser daoUser, Date date, float totalPrice, String details) {
         this.daoUser = daoUser;

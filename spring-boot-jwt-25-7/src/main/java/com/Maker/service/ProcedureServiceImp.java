@@ -46,7 +46,7 @@ public class ProcedureServiceImp implements ProceduresService {
 
     @Override
     public MyProcedure editProcedure(String name, MyProcedure pro) {
-
+//Todo check if exist
         MyProcedure procedure = getProcedure(name);
         procedure.setpName(pro.getpName());
         procedure.setDefaultPrice(pro.getDefaultPrice());

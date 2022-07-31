@@ -51,6 +51,8 @@ public class PatientServiceImp implements PatientService {
 
     @Override
     public Patient DiagnosisOrEdit(Patient patient,int pId) {
+
+        //todo check if exist
         Patient oldPatient = patientRepo.findById(pId);
 
         oldPatient.setAge(patient.getAge());

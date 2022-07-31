@@ -39,7 +39,6 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
 
 
 
-
     @Override
     public TreatmentPlan addTreatmentPlan(TreatmentPlan treatmentPlan) {
        //no need to check if there is an exists treatment plan
@@ -134,7 +133,6 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
 
 
 
-
     @Override
     public ToothProcedure getToothProcedure(int id) {
         if(toothProcedureRepo.existsById(id)) {
@@ -156,10 +154,6 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
     public List<ToothProcedure> getAllToothProceduresByTreatmentPlan(TreatmentPlan treatmentPlan) {
         return toothProcedureRepo.findAllByTreatmentPlan(treatmentPlan);
     }
-
-
-
-
 
 
 

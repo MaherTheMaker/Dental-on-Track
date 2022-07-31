@@ -20,6 +20,7 @@ public class ProceduresController {
     @Autowired
     private MyProcedureRepo myProcedureRepo;
 
+    //Todo Change to service
     @GetMapping("/AllProcedure")
     private ResponseEntity<List<MyProcedure>> showProcedures() {
         return ResponseEntity.ok().body(myProcedureRepo.findAll());
