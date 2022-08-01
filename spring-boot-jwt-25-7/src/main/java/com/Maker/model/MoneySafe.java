@@ -13,8 +13,8 @@ public class MoneySafe {
     private String name;
 
     //todo one to one
-    @OneToMany(mappedBy = "safe", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DAOUser> daoUsers;
+    @OneToOne(mappedBy = "safe", cascade = CascadeType.ALL, orphanRemoval = true)
+    private DAOUser daoUsers;
 
     private String type;
 
@@ -27,11 +27,11 @@ public class MoneySafe {
     @OneToMany(mappedBy = "moneySafe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Expenses> expenses;
 
-    @OneToMany(mappedBy = "safe", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "safeName", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Transaction> transactionList;
 
 
-    public MoneySafe(String name, List<DAOUser> daoUsers, String type, float balance, List<Receipt> receipt, List<Expenses> expenses, List<Transaction> transactionList) {
+    public MoneySafe(String name, DAOUser daoUsers, String type, float balance, List<Receipt> receipt, List<Expenses> expenses, List<Transaction> transactionList) {
         this.name = name;
         this.daoUsers = daoUsers;
         this.type = type;
@@ -68,12 +68,16 @@ public class MoneySafe {
         this.type = type;
     }
 
-    public List<DAOUser> getDaoUsers() {
+    public DAOUser getDaoUsers() {
         return daoUsers;
     }
 
-    public void setDaoUsers(List<DAOUser> daoUsers) {
+    public void setDaoUsers(DAOUser daoUsers) {
         this.daoUsers = daoUsers;
+    }
+
+    public void setBalance(float balance) {
+        this.balance = balance;
     }
 
     public float getBalance() {
