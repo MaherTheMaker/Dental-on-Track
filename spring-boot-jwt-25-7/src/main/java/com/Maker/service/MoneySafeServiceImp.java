@@ -47,8 +47,39 @@ public class MoneySafeServiceImp implements MoneySafeService{
         moneySafe2.setName(moneySafe.getName());
 
         return  moneySafeRepo.save(moneySafe2);
+    }
+
+    @Override
+    public MoneySafe AddBalancedMoneySafe(int id, float balance) {
+        MoneySafe moneySafe2;
+        Optional<MoneySafe> moneySafe1 = moneySafeRepo.findById(id);
+        if(!moneySafe1.isPresent()){
+            throw new NotFoundException("No moneySafe Exists with this ID");
+        }
+
+        else moneySafe2= moneySafe1.get();
 
 
+        moneySafe2.addToBalance(balance);
+
+        return  moneySafeRepo.save(moneySafe2);
+    }
+
+    @Override
+    public MoneySafe TakeBalancedMoneySafe(int id, float balance) {
+        MoneySafe moneySafe2;
+        Optional<MoneySafe> moneySafe1 = moneySafeRepo.findById(id);
+        if(!moneySafe1.isPresent()){
+            throw new NotFoundException("No moneySafe Exists with this ID");
+        }
+
+        else moneySafe2= moneySafe1.get();
+
+        if(moneySafe2.getBalance()<balance)
+            throw  new BalanceNotEnough("Not Enough Money in the safe to add this expense ");
+        moneySafe2.takeFromBalance(balance);
+
+        return  moneySafeRepo.save(moneySafe2);
     }
 
     @Override
@@ -71,10 +102,13 @@ public class MoneySafeServiceImp implements MoneySafeService{
         else return moneySafe1.get();
     }
 
+
+
     @Override
     public List<MoneySafe> getAllMoneySafe() {
         return moneySafeRepo.findAll();
     }
+
 
 
 }

@@ -84,7 +84,7 @@ public class TestController {
 
     @GetMapping("/Receipt/getByDate")
     private ResponseEntity<List<Receipt>> getAllReceiptByDate(@RequestBody date date1){
-
+        System.out.printf(date1.date.toString());
 
         return ResponseEntity.ok().body(receiptService.getAllReceipt(date1.date));
 
@@ -117,11 +117,12 @@ public class TestController {
 
     }
 
-    @GetMapping("/expense/getBySafe")
-    private ResponseEntity<List<Expenses>> getAllExpensesBySafe(@RequestBody String safeName){
+    @GetMapping("/expense/getBySafe/{name}")
+    private ResponseEntity<List<Expenses>> getAllExpensesBySafe(@PathVariable String name){
 
+        System.out.println( name);
 
-        return ResponseEntity.ok().body(expensesService.getMoneySafeExpenses(safeName));
+        return ResponseEntity.ok().body(expensesService.getMoneySafeExpenses(name));
 
     }
 

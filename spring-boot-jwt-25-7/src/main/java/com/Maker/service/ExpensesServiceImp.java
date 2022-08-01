@@ -28,23 +28,36 @@ public class ExpensesServiceImp implements ExpensesService {
 
     @Override
     public Expenses add(ExpensesForm expenses) {
+        //Todo Validate
         Expenses e = new Expenses();
         e.setDaoUser(userDao.findByUsername(expenses.daoUserName));
+
+        //Todo take balance
+        MoneySafe moneySafe=moneySafeService.getMoneySafe(expenses.safeName);
+        e.setMoneySafe(moneySafe);
+        moneySafeService.TakeBalancedMoneySafe(moneySafe.getId(),expenses.totalPrice);
+
+
+
         e.setMoneySafe(moneySafeService.getMoneySafe(expenses.safeName));
         e.setSafeName(expenses.safeName);
         e.setDetails(expenses.details);
         e.setDate(expenses.date);
+        e.setTotalPrice(expenses.totalPrice);
         e.setDaoUserName(expenses.daoUserName);
         return expensesRepo.save(e);
     }
+
+
 
     @Override
     public Expenses getExpense(int id) {
         if(expensesRepo.existsById(id)){
             return expensesRepo.findById(id).get();
         }
-        else throw new NotFoundException("No Expense with this name");
+        else throw new NotFoundException("No Expense with this ID");
     }
+
 
     @Override
     public List<Expenses> getExpenses(Date date) {
@@ -60,6 +73,7 @@ public class ExpensesServiceImp implements ExpensesService {
     public List<Expenses> getMoneySafeExpensesInDate(String safeName,Date date) {
         return expensesRepo.findAllBySafeNameAndDate(safeName,date);
     }
+
 }
 
 

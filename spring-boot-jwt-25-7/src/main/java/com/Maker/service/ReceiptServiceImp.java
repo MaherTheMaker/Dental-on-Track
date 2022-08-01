@@ -1,6 +1,7 @@
 package com.Maker.service;
 
 
+import com.Maker.model.MoneySafe;
 import com.Maker.model.ReceiptForm;
 import com.Maker.dao.ReceiptRepo;
 import com.Maker.dao.UserDao;
@@ -43,13 +44,21 @@ public class ReceiptServiceImp implements ReceiptService {
         receipt1.setTotal(receipt.getTotal());
         receipt1.setPatientName(patientService.getPatient(id).getFullName());
         receipt1.setPatient(patientService.getPatient(id));
-        receipt1.setMoneySafe(moneySafeService.getMoneySafe(receipt.getSafeName()));
+
+
+
+        //Todo Add balance
+        MoneySafe moneySafe=moneySafeService.getMoneySafe(receipt.getSafeName());
+        receipt1.setMoneySafe(moneySafe);
+        moneySafeService.AddBalancedMoneySafe(moneySafe.getId(),receipt.getTotal());
+
+
         receipt1.setDaoUser(userDao.findByUsername(receipt.getUsername()));
         return receiptRepo.save(receipt1);
     }
 
     @Override
-    public Receipt editReceipt(int recId,Receipt receipt) {
+    public Receipt editReceipt(int recId, Receipt receipt) {
 
         if(receiptRepo.existsById(recId)) {
 
