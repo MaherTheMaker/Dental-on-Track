@@ -49,6 +49,9 @@ public class Receipt {
     @JsonIgnore
     private MoneySafe moneySafe;
 
+    private boolean isDiscount;
+
+
 
     private Date date;
 
@@ -56,7 +59,7 @@ public class Receipt {
     private List<ToothProcedure> procedure;
 
 
-    public Receipt(String userName, String patientName, String safeName, Patient patient, DAOUser daoUser, Float total, MoneySafe moneySafe, Date date, List<ToothProcedure> procedure) {
+    public Receipt(String userName, String patientName, String safeName, Patient patient, DAOUser daoUser, Float total, MoneySafe moneySafe, boolean isDiscount, Date date, List<ToothProcedure> procedure) {
         this.userName = userName;
         this.patientName = patientName;
         this.safeName = safeName;
@@ -64,8 +67,13 @@ public class Receipt {
         this.daoUser = daoUser;
         Total = total;
         this.moneySafe = moneySafe;
+        this.isDiscount = isDiscount;
         this.date = date;
         this.procedure = procedure;
+    }
+
+    public boolean isDiscount() {
+        return isDiscount;
     }
 
     public Receipt() {
