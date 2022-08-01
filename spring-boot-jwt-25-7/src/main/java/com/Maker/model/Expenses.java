@@ -31,6 +31,7 @@ public class Expenses {
     private String details;
 
 
+
     @Column(nullable = false)
     private String safeName;
 

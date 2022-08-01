@@ -18,7 +18,7 @@ public class MoneySafe {
 
     private String type;
 
-    private float balance = 0.0f;
+    private float balance ;
 
     @OneToMany(mappedBy = "moneySafe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Receipt> receipt;
@@ -31,15 +31,23 @@ public class MoneySafe {
     private List<Transaction> transactionList;
 
 
-    public MoneySafe(String name, List<DAOUser> daoUsers, String type, float balance, List<Receipt> receipt, List<Transaction> transactionList) {
+    public MoneySafe(String name, List<DAOUser> daoUsers, String type, float balance, List<Receipt> receipt, List<Expenses> expenses, List<Transaction> transactionList) {
         this.name = name;
         this.daoUsers = daoUsers;
         this.type = type;
         this.balance = balance;
         this.receipt = receipt;
+        this.expenses = expenses;
         this.transactionList = transactionList;
     }
 
+    public List<Expenses> getExpenses() {
+        return expenses;
+    }
+
+    public void setExpenses(List<Expenses> expenses) {
+        this.expenses = expenses;
+    }
 
     public MoneySafe() {
     }
@@ -69,6 +77,18 @@ public class MoneySafe {
     }
 
     public float getBalance() {
+        return balance;
+    }
+
+    public float addToBalance(float added)
+    {
+        balance+=added;
+        return balance;
+    }
+
+    public float takeFromBalance(float taken)
+    {
+        balance-=taken;
         return balance;
     }
 

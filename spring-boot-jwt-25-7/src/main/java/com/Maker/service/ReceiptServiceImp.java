@@ -1,6 +1,7 @@
 package com.Maker.service;
 
 
+import com.Maker.model.MoneySafe;
 import com.Maker.model.ReceiptForm;
 import com.Maker.dao.ReceiptRepo;
 import com.Maker.dao.UserDao;
@@ -22,8 +23,6 @@ public class ReceiptServiceImp implements ReceiptService {
     private PatientService patientService;
 
 
-
-
     @Autowired
     private UserDao userDao;
 
@@ -34,6 +33,8 @@ public class ReceiptServiceImp implements ReceiptService {
     @Autowired
     private ProceduresService proceduresService;
 
+
+
     @Override
     public Receipt add(int id, ReceiptForm receipt) {
         Receipt receipt1 = new Receipt();
@@ -43,13 +44,32 @@ public class ReceiptServiceImp implements ReceiptService {
         receipt1.setTotal(receipt.getTotal());
         receipt1.setPatientName(patientService.getPatient(id).getFullName());
         receipt1.setPatient(patientService.getPatient(id));
-        receipt1.setMoneySafe(moneySafeService.getMoneySafe(receipt.getSafeName()));
+
+
+
+        //Todo Add balance
+        MoneySafe moneySafe=moneySafeService.getMoneySafe(receipt.getSafeName());
+        receipt1.setMoneySafe(moneySafe);
+
+        float amount;
+        //todo remove dummyData
+        float discountPercent=.2f;
+
+        if(receipt1.isDiscount())
+            amount=receipt.getTotal()-receipt.getTotal()*discountPercent;
+        else
+            amount=receipt.getTotal();
+        moneySafeService.AddBalancedMoneySafe(moneySafe.getId(),amount);
+
+
+
+
         receipt1.setDaoUser(userDao.findByUsername(receipt.getUsername()));
         return receiptRepo.save(receipt1);
     }
 
     @Override
-    public Receipt editReceipt(int recId,Receipt receipt) {
+    public Receipt editReceipt(int recId, Receipt receipt) {
 
         if(receiptRepo.existsById(recId)) {
 
@@ -77,6 +97,10 @@ public class ReceiptServiceImp implements ReceiptService {
 
     @Override
     public List<Receipt> getAllReceipt() {
+
         return receiptRepo.findAll();
     }
+
+
+
 }
