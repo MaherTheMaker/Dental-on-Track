@@ -2,14 +2,8 @@ package com.Maker.controller;
 
 
 
-import com.Maker.model.Expenses;
-import com.Maker.model.MoneySafe;
-import com.Maker.model.Receipt;
-import com.Maker.model.ReceiptForm;
-import com.Maker.service.ExpensesForm;
-import com.Maker.service.ExpensesService;
-import com.Maker.service.MoneySafeService;
-import com.Maker.service.ReceiptService;
+import com.Maker.model.*;
+import com.Maker.service.*;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +25,9 @@ public class TestController {
     @Autowired
     private ExpensesService expensesService;
 
+
+    @Autowired
+    private TransactionService transactionService;
 
     @PostMapping("/AddSafe/{uID}")
     private ResponseEntity<MoneySafe> AddSafe(@PathVariable int uID, @RequestBody MoneySafe moneySafe){
@@ -135,6 +132,45 @@ public class TestController {
 
 
     //TRANSACTION
+    @PostMapping("/transaction/add")
+    private ResponseEntity<Transaction> addTransaction (@RequestBody Transaction transaction){
+
+        return ResponseEntity.accepted().body(transactionService.add(transaction));
+    }
+
+
+    @GetMapping("/transaction/{id}/getTransaction")
+    private ResponseEntity<Transaction> getTransaction(@PathVariable int id ){
+        return ResponseEntity.ok().body(transactionService.getTransaction(id));
+    }
+
+
+    @GetMapping("/transaction/getByDate")
+    private ResponseEntity<List<Transaction>> getAllTransactionByDate(@RequestBody date date1){
+        return ResponseEntity.ok().body(transactionService.getAllTransaction(date1.date));
+    }
+
+
+    @GetMapping("/transaction/getBySafe/{safeName}")
+    private ResponseEntity<List<Transaction>> getAllTransactionBySafe(@PathVariable String safeName){
+
+        return ResponseEntity.ok().body(transactionService.getAllTransaction(safeName));
+    }
+
+
+    @GetMapping("/transaction/getBySafeAndDate")
+    private ResponseEntity<List<Transaction>> getAllTransactionBySafeAndDate(@RequestBody DateAndSafeName dateAndSafeName){
+        return ResponseEntity.ok().body(transactionService.getAllTransactionBySafeAndDate(dateAndSafeName.safeName,dateAndSafeName.d));
+    }
+
+
+
+
+
+
+
+
+
 
 
 
