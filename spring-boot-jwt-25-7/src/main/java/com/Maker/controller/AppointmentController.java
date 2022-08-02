@@ -45,6 +45,7 @@ public class AppointmentController {
     @GetMapping("/GetAllDateRangeAppointment")
     private ResponseEntity<List<Appointment>> GetAllByDateRangeAppointment(@RequestBody rangeDate date){
 
+        System.out.println(date.start+ " "+ date.end);
         return ResponseEntity.accepted().body(appointmentService.getRangeAppointment(date.start,date.end));
     }
 
@@ -56,9 +57,20 @@ public class AppointmentController {
         return ResponseEntity.accepted().body(appointmentService.editAppointment(id ,appointment));
     }
 
+  public   boolean calculateConflict(Appointment oldAppointment,Appointment newAppointment)
+    {
+        if(newAppointment.getStartTime()>=oldAppointment.getStartTime() &&newAppointment.getStartTime()<=oldAppointment.getEndTime())
+            return true;
+       else if(newAppointment.getEndTime()>=oldAppointment.getStartTime() &&newAppointment.getEndTime()<=oldAppointment.getEndTime())
+            return true;
+       else if(oldAppointment.getStartTime()>=newAppointment.getStartTime() && oldAppointment.getStartTime()<=newAppointment.getEndTime())
+           return true;
 
+        return false;
+    }
 
 }
+
 
 @Data
 class rangeDate {

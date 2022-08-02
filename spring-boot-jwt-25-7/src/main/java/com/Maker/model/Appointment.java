@@ -46,6 +46,10 @@ public class Appointment {
         this.notes = notes;
     }
 
+    public Appointment(int startTime, int endTime) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
 
     public Appointment() {
     }

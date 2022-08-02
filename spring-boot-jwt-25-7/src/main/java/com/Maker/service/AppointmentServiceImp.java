@@ -27,17 +27,19 @@ public class AppointmentServiceImp implements AppointmentService {
     @Override
     public Appointment addAppointment(Appointment appointment) {
 
+       List<Appointment> test1=  appointmentRepo.findAllByDate(appointment.getDate());
 
-       List<Appointment> test=  appointmentRepo.findAllByDateAndStartTimeGreaterThanAndEndTimeLessThan(appointment.getDate(), appointment.getStartTime(), 40);
+        for (Appointment var : test1)
+        {
+           if(calculateConflict(var,appointment))
+               throw  new ObjectAlreadyExist("There is an appointment in that range ");
 
+        }
 
-
-
-    if (test.isEmpty())
         return appointmentRepo.save(appointment);
 
-    else
-        throw  new ObjectAlreadyExist("There is an appointment in that range ");
+
+
     }
 
     @Override
@@ -87,6 +89,19 @@ public class AppointmentServiceImp implements AppointmentService {
         appointment1.setNotes(appointment.getNotes());
         return appointment1;
     }
+
+    public   boolean calculateConflict(Appointment oldAppointment,Appointment newAppointment)
+    {
+        if(newAppointment.getStartTime()>=oldAppointment.getStartTime() &&newAppointment.getStartTime()<=oldAppointment.getEndTime())
+            return true;
+        else if(newAppointment.getEndTime()>=oldAppointment.getStartTime() &&newAppointment.getEndTime()<=oldAppointment.getEndTime())
+            return true;
+        else if(oldAppointment.getStartTime()>=newAppointment.getStartTime() && oldAppointment.getStartTime()<=newAppointment.getEndTime())
+            return true;
+
+        return false;
+    }
+
 
 
 
