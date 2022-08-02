@@ -70,6 +70,7 @@ public class Appointment {
         this.date = date;
     }
 
+
     public int getStartTime() {
         return startTime;
     }

@@ -7,6 +7,7 @@ import com.Maker.model.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -16,9 +17,24 @@ public class TransactionServiceImp implements TransactionService {
     @Autowired
     private TransactionRepo transactionRepo;
 
+
+    @Autowired
+    private MoneySafeService moneySafeService;
+
     @Override
-    public Transaction add(Transaction transaction) {
-        return transactionRepo.save(transaction);
+    public Transaction add(Transaction transaction, int id) {
+            transaction.setFromSafe(moneySafeService.getMoneySafe(id));
+            transaction.setSafeName(transaction.getFromSafe().getName());
+            transaction.setDate(LocalDate.now());
+            transaction.setPayment(moneySafeService.getMoneySafe(id).getBalance());
+            if(transaction.getPayment() > 0){
+                moneySafeService.addTransactionAmount(transaction.getPayment());
+                moneySafeService.getMoneySafe(id).setBalance(0);
+            }
+            else throw new NotFoundException("No payments Method Today");
+
+            return transactionRepo.save(transaction);
+
     }
 
     @Override
@@ -32,22 +48,23 @@ public class TransactionServiceImp implements TransactionService {
     }
 
     @Override
-    public List<Transaction> getAllTransaction(Date date) {
+    public List<Transaction> getAllTransaction(LocalDate date) {
         return transactionRepo.findAllByDate(date);
     }
 
     @Override
-    public List<Transaction> getAllTransaction(String safeName) {
+    public List<Transaction> getAllSafeTransaction(String safeName) {
+        MoneySafe safe = moneySafeService.getMoneySafe(safeName);
         //Todo validation if MoneySafe Exists
         return transactionRepo.findAllBySafeName(safeName);
     }
 
-
     @Override
-    public List<Transaction> getAllTransactionBySafeAndDate(String safeName, Date date) {
+    public List<Transaction> getAllTransactionBySafeAndDate(String safeName, LocalDate date) {
 
+        MoneySafe safe = moneySafeService.getMoneySafe(safeName);
         //Todo validation if MoneySafe Exists.
-        return transactionRepo.findAllBySafeNameAndDate(safeName, date);
+        return transactionRepo.findAllBySafeNameAndDate(safeName,date);
     }
 
 

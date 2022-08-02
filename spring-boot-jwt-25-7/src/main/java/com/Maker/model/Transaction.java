@@ -3,6 +3,8 @@ package com.Maker.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -12,29 +14,26 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "daoUser_id",nullable = false)
-    @JsonIgnore
-    private DAOUser daoUser;
-
-    @ManyToOne
-    @JoinColumn(name = "moneySafe_id",nullable = false)
-    @JsonIgnore
-    private MoneySafe safeName;
-
-    private Date date;
-    private String userName;
-
-    private String SafeName;
-
-    private float payment;
+   @ManyToOne
+   @JoinColumn(name = "moneySafe_id",nullable = false)
+   @JsonIgnore
+   private MoneySafe fromSafe;
 
 
-    public Transaction(Date date, String userName, String SafeName, float payment) {
-        this.date = date;
-        this.userName = userName;
-        this.SafeName = SafeName;
-        this.payment = payment;
+   private LocalDate date ;
+
+
+   @NotNull
+   private float payment;
+
+   @NotNull
+   private String details;
+
+
+   private String safeName;
+
+    public Transaction(String details) {
+        this.details = details;
     }
 
 
@@ -42,58 +41,21 @@ public class Transaction {
     }
 
 
-    public DAOUser getDaoUser() {
-        return daoUser;
+    public MoneySafe getFromSafe() {
+        return fromSafe;
     }
 
-    public void setDaoUser(DAOUser daoUser) {
-        this.daoUser = daoUser;
-    }
-
-    public String getUserId() {
-        return userName;
-    }
-
-    public void setUserId(String UserName) {
-        userName = UserName;
-    }
-
-    public String getSafeId() {
-        return SafeName;
-    }
-
-    public void setSafeId(String safeName) {
-        this.SafeName = safeName;
+    public void setFromSafe(MoneySafe fromSafe) {
+        this.fromSafe = fromSafe;
     }
 
 
-
-    public void setSafeName(MoneySafe safeName) {
-        this.safeName = safeName;
-    }
-
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getSafeName() {
-        return SafeName;
-    }
-
-    public void setSafeName(String safeName) {
-        this.SafeName = safeName;
     }
 
     public float getPayment() {
@@ -102,5 +64,21 @@ public class Transaction {
 
     public void setPayment(float payment) {
         this.payment = payment;
+    }
+
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    public String getSafeName() {
+        return safeName;
+    }
+
+    public void setSafeName(String safeName) {
+        this.safeName = safeName;
     }
 }

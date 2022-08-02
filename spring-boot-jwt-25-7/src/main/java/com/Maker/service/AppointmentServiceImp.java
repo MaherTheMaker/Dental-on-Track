@@ -28,8 +28,8 @@ public class AppointmentServiceImp implements AppointmentService {
     public Appointment addAppointment(Appointment appointment) {
 
 
-       List<Appointment> test=  appointmentRepo.findAllByDateAndStartTimeGreaterThanAndEndTimeLessThan(appointment.getDate(),appointment.getStartTime()
-               ,appointment.getEndTime());
+       List<Appointment> test=  appointmentRepo.findAllByDateAndStartTimeGreaterThanAndEndTimeLessThan(appointment.getDate(), appointment.getStartTime(), 40);
+
 
 
 

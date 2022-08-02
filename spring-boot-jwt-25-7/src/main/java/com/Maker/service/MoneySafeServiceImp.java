@@ -109,6 +109,11 @@ public class MoneySafeServiceImp implements MoneySafeService{
         return moneySafeRepo.findAll();
     }
 
+    @Override
+    public void addTransactionAmount(float amount) {
+        MoneySafe moneySafe = moneySafeRepo.findById(1).get();
+        moneySafe.setBalance(moneySafe.getBalance()+amount);
+    }
 
 
 }

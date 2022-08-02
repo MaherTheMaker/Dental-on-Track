@@ -18,9 +18,8 @@ public class DAOUser {
 	@JsonIgnore
 	private String password;
 
-
-	@OneToMany(mappedBy = "daoUser", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Transaction> transactionList;
+//	@OneToMany(mappedBy = "daoUser", cascade = CascadeType.ALL, orphanRemoval = true)
+//	private List<Transaction> transactionList;
 
 
 	@OneToOne
@@ -101,11 +100,11 @@ public class DAOUser {
 		return id;
 	}
 
-	public List<Transaction> getTransactionList() {
-		return transactionList;
-	}
-
-	public void setTransactionList(List<Transaction> transactionList) {
-		this.transactionList = transactionList;
-	}
+//	public List<Transaction> getTransactionList() {
+//		return transactionList;
+//	}
+//
+//	public void setTransactionList(List<Transaction> transactionList) {
+//		this.transactionList = transactionList;
+//	}
 }

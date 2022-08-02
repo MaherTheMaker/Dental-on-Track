@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -133,10 +134,10 @@ public class TestController {
 
 
     //TRANSACTION
-    @PostMapping("/transaction/add")
-    private ResponseEntity<Transaction> addTransaction (@RequestBody Transaction transaction){
+    @PostMapping("/transaction/add/{id}")
+    private ResponseEntity<Transaction> addTransaction (@RequestBody Transaction transaction , @PathVariable int id){
 
-        return ResponseEntity.accepted().body(transactionService.add(transaction));
+        return ResponseEntity.accepted().body(transactionService.add(transaction , id));
     }
 
 
@@ -146,21 +147,21 @@ public class TestController {
     }
 
 
-    @GetMapping("/transaction/getByDate")
-    private ResponseEntity<List<Transaction>> getAllTransactionByDate(@RequestBody date date1){
-        return ResponseEntity.ok().body(transactionService.getAllTransaction(date1.date));
+    @GetMapping("/transaction/getByDate/")
+    private ResponseEntity<List<Transaction>> getAllTransactionByDate(@RequestBody loDate loDate){
+        return ResponseEntity.ok().body(transactionService.getAllTransaction(loDate.date));
     }
 
 
     @GetMapping("/transaction/getBySafe/{safeName}")
     private ResponseEntity<List<Transaction>> getAllTransactionBySafe(@PathVariable String safeName){
 
-        return ResponseEntity.ok().body(transactionService.getAllTransaction(safeName));
+        return ResponseEntity.ok().body(transactionService.getAllSafeTransaction(safeName));
     }
 
 
     @GetMapping("/transaction/getBySafeAndDate")
-    private ResponseEntity<List<Transaction>> getAllTransactionBySafeAndDate(@RequestBody DateAndSafeName dateAndSafeName){
+    private ResponseEntity<List<Transaction>> getAllTransactionBySafeAndDate(@RequestBody LocalDateAndSafeName dateAndSafeName){
         return ResponseEntity.ok().body(transactionService.getAllTransactionBySafeAndDate(dateAndSafeName.safeName,dateAndSafeName.d));
     }
 
@@ -185,6 +186,10 @@ class date {
     Date date;
 }
 
+class loDate {
+    LocalDate date ;
+}
+
 
 @Data
 class DateAndSafeName{
@@ -192,4 +197,10 @@ class DateAndSafeName{
     String safeName;
 }
 
+
+@Data
+class LocalDateAndSafeName {
+        LocalDate d;
+        String safeName;
+}
 

@@ -18,4 +18,6 @@ public interface MoneySafeService {
     MoneySafe getMoneySafe(String username);
     MoneySafe getMoneySafe(int id);
     List<MoneySafe> getAllMoneySafe();
+
+    void addTransactionAmount(float amount);
 }

@@ -18,6 +18,7 @@ public class MoneySafe {
 
     private String type;
 
+
     private float balance ;
 
     @OneToMany(mappedBy = "moneySafe", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -27,7 +28,7 @@ public class MoneySafe {
     @OneToMany(mappedBy = "moneySafe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Expenses> expenses;
 
-    @OneToMany(mappedBy = "safeName", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "fromSafe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Transaction> transactionList;
 
 
