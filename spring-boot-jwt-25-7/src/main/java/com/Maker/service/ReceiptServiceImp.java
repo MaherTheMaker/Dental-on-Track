@@ -1,12 +1,9 @@
 package com.Maker.service;
 
 
-import com.Maker.model.MoneySafe;
-import com.Maker.model.ReceiptForm;
+import com.Maker.model.*;
 import com.Maker.dao.ReceiptRepo;
 import com.Maker.dao.UserDao;
-import com.Maker.model.NotFoundException;
-import com.Maker.model.Receipt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -33,38 +30,38 @@ public class ReceiptServiceImp implements ReceiptService {
     @Autowired
     private ProceduresService proceduresService;
 
-
-
-    @Override
     public Receipt add(int id, ReceiptForm receipt) {
         Receipt receipt1 = new Receipt();
         receipt1.setUserName(receipt.getUsername());
         receipt1.setSafeName(receipt.getSafeName());
         receipt1.setDate(receipt.getDate());
-        receipt1.setTotal(receipt.getTotal());
-        receipt1.setPatientName(patientService.getPatient(id).getFullName());
-        receipt1.setPatient(patientService.getPatient(id));
+        Patient patient=patientService.getPatient(id);
+        receipt1.setPatientName(patient.getFullName());
+        receipt1.setPatient(patient);
+        receipt1.setDiscount(receipt.isDiscount());
 
 
 
-        //Todo Add balance
+
         MoneySafe moneySafe=moneySafeService.getMoneySafe(receipt.getSafeName());
         receipt1.setMoneySafe(moneySafe);
 
         float amount;
-        //todo remove dummyData
-        float discountPercent=.2f;
+
+        float discountPercent=patient.getDiscountType().value;
 
         if(receipt1.isDiscount())
             amount=receipt.getTotal()-receipt.getTotal()*discountPercent;
         else
             amount=receipt.getTotal();
+
         moneySafeService.AddBalancedMoneySafe(moneySafe.getId(),amount);
 
-
-
+        receipt1.setTotal(amount);
 
         receipt1.setDaoUser(userDao.findByUsername(receipt.getUsername()));
+
+
         return receiptRepo.save(receipt1);
     }
 

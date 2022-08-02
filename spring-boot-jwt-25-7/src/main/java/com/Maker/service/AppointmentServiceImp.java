@@ -1,18 +1,17 @@
 package com.Maker.service;
 
 import com.Maker.dao.AppointmentRepo;
-import com.Maker.dao.PatientRepo;
 import com.Maker.model.Appointment;
 import com.Maker.model.NotFoundException;
+import com.Maker.model.ObjectAlreadyExist;
 import com.Maker.model.Patient;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Date;
 import java.util.List;
-
+@Slf4j
 @Repository
 public class AppointmentServiceImp implements AppointmentService {
 
@@ -29,8 +28,16 @@ public class AppointmentServiceImp implements AppointmentService {
     public Appointment addAppointment(Appointment appointment) {
 
 
+       List<Appointment> test=  appointmentRepo.findAllByDateAndStartTimeGreaterThanAndEndTimeLessThan(appointment.getDate(),appointment.getStartTime()
+               ,appointment.getEndTime());
+
+
+
+    if (test.isEmpty())
         return appointmentRepo.save(appointment);
 
+    else
+        throw  new ObjectAlreadyExist("There is an appointment in that range ");
     }
 
     @Override
@@ -54,6 +61,20 @@ public class AppointmentServiceImp implements AppointmentService {
         else return appointment1;
     }
 
+    @Override
+    public List<Appointment> getRangeAppointment(Date startDate, Date endDate) {
+
+        List<Appointment> appointment1;
+
+        appointment1 = appointmentRepo.findAllByDateBetween(startDate,endDate);
+
+
+
+        if(appointment1==null){
+            throw new NotFoundException("No Appointment Found in this Date");
+        }
+        else return appointment1;
+    }
 
     @Override
     public Appointment editAppointment(int id,Appointment appointment) {
@@ -66,6 +87,7 @@ public class AppointmentServiceImp implements AppointmentService {
         appointment1.setNotes(appointment.getNotes());
         return appointment1;
     }
+
 
 
 }

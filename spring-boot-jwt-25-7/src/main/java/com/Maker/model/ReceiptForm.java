@@ -9,6 +9,7 @@ public class ReceiptForm {
    public String Username;
    public String safeName;
    public  String procedureName;
+   public boolean discount;
 
    public Date date;
    public  float total;
@@ -24,6 +25,13 @@ public class ReceiptForm {
     public ReceiptForm() {
     }
 
+    public boolean isDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(boolean discount) {
+        this.discount = discount;
+    }
 
     public String getUsername() {
         return Username;

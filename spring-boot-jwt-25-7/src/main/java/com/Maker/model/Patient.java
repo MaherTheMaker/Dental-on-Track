@@ -24,7 +24,7 @@ public class Patient {
     private Boolean deciduousTeeth;
     private String familyStatus;
     private float balance = 0.0f ;
-    private String discountType;
+    private DiscountType discountType;
 
     //Todo move to separate table
 
@@ -37,7 +37,7 @@ public class Patient {
 
 
 
-    public Patient(String fullName, Gender gender, String phoneNumber, String email, String address, short age, Boolean deciduousTeeth, String familyStatus, float balance, String discountType, Date lastVisitToADoctor, String careWays, String habits, List<Image> gallery, List<File> filesList) {
+    public Patient(String fullName, Gender gender, String phoneNumber, String email, String address, short age, Boolean deciduousTeeth, String familyStatus, float balance, DiscountType discountType, Date lastVisitToADoctor, String careWays, String habits, List<Image> gallery, List<File> filesList) {
         this.fullName = fullName;
         this.gender = gender;
         this.phoneNumber = phoneNumber;
@@ -179,11 +179,11 @@ public class Patient {
         this.balance = balance;
     }
 
-    public String getDiscountType() {
+    public DiscountType getDiscountType() {
         return discountType;
     }
 
-    public void setDiscountType(String discountType) {
+    public void setDiscountType(DiscountType discountType) {
         this.discountType = discountType;
     }
 

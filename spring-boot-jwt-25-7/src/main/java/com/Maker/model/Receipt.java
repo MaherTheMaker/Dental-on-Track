@@ -76,6 +76,10 @@ public class Receipt {
         return isDiscount;
     }
 
+    public void setDiscount(boolean discount) {
+        isDiscount = discount;
+    }
+
     public Receipt() {
     }
 

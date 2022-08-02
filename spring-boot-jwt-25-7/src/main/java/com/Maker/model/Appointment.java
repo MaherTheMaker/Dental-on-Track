@@ -1,10 +1,10 @@
 package com.Maker.model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.util.Date;
 
 @Entity
@@ -19,25 +19,26 @@ public class Appointment {
     @JsonIgnore
     private Patient patient;
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     @Column(nullable = false)
     private Date date;
 
 
 
     //Todo how can declare a time
-    @Column(nullable = false,unique = true)
-    private String startTime;
+    @Column(nullable = false,unique = false)
+    private int startTime;
 
     //Todo how can declare a time
-    @Column(nullable = false,unique = true)
-    private String endTime;
+    @Column(nullable = false,unique = false)
+    private int endTime;
 
     @Column(length = 200)
     private String notes;
 
 
 
-    public Appointment(Patient patient, Date date, String startTime, String endTime, String notes) {
+    public Appointment(Patient patient, Date date, int startTime, int endTime, String notes) {
         this.patient = patient;
         this.date = date;
         this.startTime = startTime;
@@ -69,19 +70,19 @@ public class Appointment {
         this.date = date;
     }
 
-    public String getStartTime() {
+    public int getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(int startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public int getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(int endTime) {
         this.endTime = endTime;
     }
 
