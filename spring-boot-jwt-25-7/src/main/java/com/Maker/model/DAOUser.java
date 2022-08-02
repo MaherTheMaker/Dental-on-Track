@@ -23,7 +23,7 @@ public class DAOUser {
 	private List<Transaction> transactionList;
 
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "safe_id")
 	@JsonIgnore
 	private MoneySafe safe;

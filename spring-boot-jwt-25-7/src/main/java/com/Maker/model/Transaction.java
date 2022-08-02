@@ -20,18 +20,21 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "moneySafe_id",nullable = false)
     @JsonIgnore
-    private MoneySafe safe;
+    private MoneySafe safeName;
 
     private Date date;
     private String userName;
 
-    private String safeName;
+    private String SafeName;
+
+    private float payment;
 
 
-    public Transaction(Date date, String userName, String safeName) {
+    public Transaction(Date date, String userName, String SafeName, float payment) {
         this.date = date;
         this.userName = userName;
-        this.safeName = safeName;
+        this.SafeName = SafeName;
+        this.payment = payment;
     }
 
 
@@ -56,19 +59,17 @@ public class Transaction {
     }
 
     public String getSafeId() {
-        return safeName;
+        return SafeName;
     }
 
     public void setSafeId(String safeName) {
+        this.SafeName = safeName;
+    }
+
+
+
+    public void setSafeName(MoneySafe safeName) {
         this.safeName = safeName;
-    }
-
-    public MoneySafe getSafe() {
-        return safe;
-    }
-
-    public void setSafe(MoneySafe safe) {
-        this.safe = safe;
     }
 
     public Date getDate() {
@@ -88,10 +89,18 @@ public class Transaction {
     }
 
     public String getSafeName() {
-        return safeName;
+        return SafeName;
     }
 
     public void setSafeName(String safeName) {
-        this.safeName = safeName;
+        this.SafeName = safeName;
+    }
+
+    public float getPayment() {
+        return payment;
+    }
+
+    public void setPayment(float payment) {
+        this.payment = payment;
     }
 }
