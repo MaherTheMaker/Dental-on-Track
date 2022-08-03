@@ -87,6 +87,13 @@ public class TestController {
         return ResponseEntity.ok().body(receiptService.getAllReceipt(date1.date));
 
     }
+    @GetMapping("/Receipt/getByDateRange")
+    private ResponseEntity<List<Receipt>> getAllReceiptByDateRange(@RequestBody rangeDate date){
+
+        System.out.println(date.start+ " "+ date.end);
+        return ResponseEntity.accepted().body(receiptService.getAllReceiptRange(date.start,date.end));
+    }
+
 
     @GetMapping("/Receipt/getAllReceipt")
     private ResponseEntity<List<Receipt>> getAll (){
@@ -111,7 +118,14 @@ public class TestController {
     private ResponseEntity<List<Expenses>> getAllExpensesByDate(@RequestBody date date1){
 
 
-        return ResponseEntity.ok().body(expensesService.getExpenses(date1.date));
+        return ResponseEntity.ok().body(expensesService.getExpensesDate(date1.date));
+
+    }
+    @GetMapping("/expense/getByDateRange")
+    private ResponseEntity<List<Expenses>> getAllExpensesByDateRange(@RequestBody rangeDate rangeDate){
+
+
+        return ResponseEntity.ok().body(expensesService.getExpensesDateRange( rangeDate.start,rangeDate.end));
 
     }
 
@@ -127,9 +141,7 @@ public class TestController {
     @GetMapping("/expense/getBySafeAndDate")
     private ResponseEntity<List<Expenses>> getMoneySafeExpensesInDate(@RequestBody DateAndSafeName dateAndSafeName){
 
-
         return ResponseEntity.ok().body(expensesService.getMoneySafeExpensesInDate(dateAndSafeName.safeName,dateAndSafeName.d));
-
     }
 
 
@@ -158,6 +170,7 @@ public class TestController {
 
         return ResponseEntity.ok().body(transactionService.getAllSafeTransaction(safeName));
     }
+
 
 
     @GetMapping("/transaction/getBySafeAndDate")

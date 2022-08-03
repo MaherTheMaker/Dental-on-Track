@@ -48,10 +48,11 @@ public class ReceiptServiceImp implements ReceiptService {
 
         float amount;
 
-        float discountPercent=patient.getDiscountType().value;
 
-        if(receipt1.isDiscount())
-            amount=receipt.getTotal()-receipt.getTotal()*discountPercent;
+        if(receipt1.isDiscount()&&patient.getDiscountType()!=null) {
+            float discountPercent = patient.getDiscountType().value;
+            amount = receipt.getTotal() - receipt.getTotal() * discountPercent;
+        }
         else
             amount=receipt.getTotal();
 
@@ -90,6 +91,12 @@ public class ReceiptServiceImp implements ReceiptService {
     @Override
     public List<Receipt> getAllReceipt(Date date) {
         return receiptRepo.findAllByDate(date);
+    }
+
+    @Override
+    public List<Receipt> getAllReceiptRange(Date startDate, Date endDate) {
+           return receiptRepo.findAllByDateBetween(startDate,endDate);
+
     }
 
     @Override

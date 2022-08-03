@@ -14,5 +14,6 @@ public interface ReceiptService {
     Receipt editReceipt(int id, Receipt receipt);
     Receipt getReceipt(int id);
     List<Receipt> getAllReceipt(Date date);
+    List<Receipt> getAllReceiptRange(Date startDate,Date endDate);
     List<Receipt> getAllReceipt();
 }

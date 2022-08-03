@@ -60,8 +60,13 @@ public class ExpensesServiceImp implements ExpensesService {
 
 
     @Override
-    public List<Expenses> getExpenses(Date date) {
+    public List<Expenses> getExpensesDate(Date date) {
         return expensesRepo.findAllByDate(date);
+    }
+
+    @Override
+    public List<Expenses> getExpensesDateRange(Date start, Date end) {
+        return expensesRepo.findAllByDateBetween(start,end);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.Maker.dao;
 
+import com.Maker.model.Appointment;
 import com.Maker.model.Expenses;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -13,4 +14,5 @@ public interface ExpensesRepo extends JpaRepository<Expenses,Integer> {
     List<Expenses> findAllByDate(Date date);
     List<Expenses> findAllBySafeName(String safeName);
     List<Expenses> findAllBySafeNameAndDate(String SafeName,Date date);
+    List<Expenses> findAllByDateBetween(Date date1, Date date2);
 }
