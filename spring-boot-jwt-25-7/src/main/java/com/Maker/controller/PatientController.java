@@ -1,6 +1,7 @@
 package com.Maker.controller;
 
 import com.Maker.dao.PatientRepo;
+import com.Maker.dao.PatientToothRepo;
 import com.Maker.model.*;
 
 import com.Maker.service.PatientService;
@@ -8,6 +9,7 @@ import com.Maker.service.PatientToothService;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,9 @@ public class PatientController {
 
     @Autowired
     private PatientService patientService;
+
+    @Autowired
+    private PatientToothRepo patientToothRepo;
 
     @Autowired
     private PatientToothService patientToothService;
@@ -87,6 +92,13 @@ public class PatientController {
         return ResponseEntity.ok().body(patientService.getAllMedHis(pId));
     }
 
+
+    @GetMapping("/{id}/editTooth")
+    public ResponseEntity<PatientTooth> editPatientTooth (@PathVariable int id,@RequestBody PatientTooth patientTooth)
+    {
+
+        return ResponseEntity.accepted().body(patientToothService.EditPatientTeeth(id,patientTooth));
+    }
 
 
 

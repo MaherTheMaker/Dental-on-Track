@@ -2,6 +2,7 @@ package com.Maker.service;
 
 import com.Maker.dao.PatientToothRepo;
 import com.Maker.dao.ToothRepo;
+import com.Maker.model.NotFoundException;
 import com.Maker.model.Patient;
 import com.Maker.model.PatientTooth;
 import com.Maker.model.Tooth;
@@ -42,12 +43,16 @@ public class PatientToothServiceImp implements PatientToothService {
 
     @Override
     public PatientTooth EditPatientTeeth(int PTID, PatientTooth patientTooth) {
-            PatientTooth oldTooth=patientToothRepo.findById(PTID).get();
-            oldTooth.setNotes(patientTooth.getNotes());
-            oldTooth.setColor(oldTooth.getColor());
-            oldTooth.setStatus(oldTooth.getStatus());
+            Boolean found;
+            if(found = patientToothRepo.existsById(PTID)){
+                PatientTooth oldTooth=patientToothRepo.findById(PTID).get();
+                oldTooth.setNotes(patientTooth.getNotes());
+                oldTooth.setColor(oldTooth.getColor());
+                oldTooth.setStatus(oldTooth.getStatus());
+                return   patientToothRepo.save(oldTooth);
+            }
+            else throw new NotFoundException("No patientTooth with this information");
 
-            return   patientToothRepo.save(oldTooth);
 
     }
 

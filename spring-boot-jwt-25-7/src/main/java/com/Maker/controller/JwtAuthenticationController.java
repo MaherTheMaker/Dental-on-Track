@@ -1,11 +1,16 @@
 package com.Maker.controller;
 
+import com.Maker.dao.UserDao;
+import com.Maker.model.Role;
+import io.jsonwebtoken.Jwt;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,8 +38,11 @@ public class JwtAuthenticationController {
 	@Autowired
 	private JwtUserDetailsService userDetailsService;
 
+	@Autowired
+	private UserDao userDao;
+
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+	public ResponseEntity<loginRes> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
 		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
 
@@ -42,9 +50,13 @@ public class JwtAuthenticationController {
 				.loadUserByUsername(authenticationRequest.getUsername());
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
-
-		return ResponseEntity.ok(new JwtResponse(token));
+		JwtResponse jwtResponse = new JwtResponse(token);
+		String role  = userDao.findByUsername(authenticationRequest.getUsername()).getRole().toString();
+		String userName = authenticationRequest.getUsername();
+		return ResponseEntity.ok(new loginRes(jwtResponse,userName,role));
 	}
+
+
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<?> saveUser(@RequestBody UserDTO user) throws Exception {
@@ -61,3 +73,18 @@ public class JwtAuthenticationController {
 		}
 	}
 }
+
+
+@Data
+class loginRes {
+	JwtResponse jwtResponse ;
+	String username;
+	String role;
+
+	public loginRes(JwtResponse jwtResponse, String username, String role) {
+		this.jwtResponse = jwtResponse;
+		this.username = username;
+		this.role = role;
+	}
+}
+
