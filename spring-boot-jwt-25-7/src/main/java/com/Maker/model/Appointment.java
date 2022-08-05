@@ -36,12 +36,14 @@ public class Appointment {
     @Column(length = 200)
     private String notes;
 
-
+    @Column(length = 30)
+    private String patientName;
 
     public Appointment(Patient patient, Date date, int startTime, int endTime, String notes) {
         this.patient = patient;
         this.date = date;
         this.startTime = startTime;
+        this.patientName = patient.getFullName();
         this.endTime = endTime;
         this.notes = notes;
     }
@@ -100,8 +102,11 @@ public class Appointment {
     }
 
 
+    public String getPatientName() {
+        return patientName;
+    }
 
-
-
-
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
+    }
 }

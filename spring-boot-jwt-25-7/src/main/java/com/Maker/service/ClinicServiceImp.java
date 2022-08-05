@@ -3,11 +3,17 @@ package com.Maker.service;
 
 
 import com.Maker.dao.ClinicRepo;
+import com.Maker.dao.ExpensesRepo;
+import com.Maker.dao.ReceiptRepo;
 import com.Maker.dao.UserDao;
 import com.Maker.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class ClinicServiceImp implements ClinicService {
@@ -23,6 +29,13 @@ public class ClinicServiceImp implements ClinicService {
     @Autowired
     private PasswordEncoder bcryptEncoder;
 
+
+    @Autowired
+    private ExpensesRepo expensesRepo;
+
+
+    @Autowired
+    private ReceiptRepo receiptRepo;
     @Override
     public Clinic editInfo(Clinic clinic) {
         Clinic old= clinicRepo.findById(clinic.getId());
@@ -79,6 +92,25 @@ public class ClinicServiceImp implements ClinicService {
             return userDao.save(daoUser1) ;
         }
         else throw new NotFoundException("User Not Found");
+    }
+
+
+    @Override
+    public float getProfit(Date from, Date to) {
+        List<Expenses> expensesList = expensesRepo.findAllByDateBetween(from , to);
+        List<Receipt>  receiptList = receiptRepo.findAllByDateBetween(from , to );
+        float expensesBalance  = 0;     int j = 0 ;
+        float receiptBalance = 0;       int i = 0;
+
+        for (Expenses expenses : expensesList) {
+            expensesBalance += expenses.getTotalPrice();
+        }
+
+        for(Receipt receipt :receiptList){
+            receiptBalance += receipt.getTotal();
+        }
+
+        return receiptBalance - expensesBalance;
     }
 
 

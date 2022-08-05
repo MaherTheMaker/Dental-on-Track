@@ -3,6 +3,8 @@ package com.Maker.controller;
 import com.Maker.model.Appointment;
 import com.Maker.service.AppointmentService;
 import com.Maker.service.PatientService;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,7 @@ public class AppointmentController {
     @PostMapping("/{pid}/AddAppointment")
     private ResponseEntity<Appointment> addAppointment(@PathVariable int pid ,@RequestBody Appointment appointment){
         appointment.setPatient(patientService.getPatient(pid));
+        appointment.setPatientName(appointment.getPatient().getFullName());
         return ResponseEntity.accepted().body(appointmentService.addAppointment(appointment));
     }
 
@@ -49,12 +52,18 @@ public class AppointmentController {
         return ResponseEntity.accepted().body(appointmentService.getRangeAppointment(date.start,date.end));
     }
 
+    @GetMapping("")
 
 
     @PostMapping("/{id}/EditAppointment")
     private ResponseEntity<Appointment> editAppointment(@PathVariable int id , @RequestBody Appointment appointment)
     {
         return ResponseEntity.accepted().body(appointmentService.editAppointment(id ,appointment));
+    }
+
+    @GetMapping("/Calendar")
+    private ResponseEntity<List<Appointment>> Calendar () {
+        return ResponseEntity.ok().body(appointmentService.Calendar());
     }
 
   public   boolean calculateConflict(Appointment oldAppointment,Appointment newAppointment)
@@ -70,6 +79,9 @@ public class AppointmentController {
     }
 
 }
+
+
+
 
 
 @Data

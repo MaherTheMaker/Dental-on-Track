@@ -15,4 +15,6 @@ public interface AppointmentService {
 
     Appointment editAppointment(int id, Appointment appointment );
 
+    List<Appointment> Calendar();
+
 }

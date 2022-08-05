@@ -4,6 +4,7 @@ package com.Maker.controller;
 
 import com.Maker.config.JwtTokenUtil;
 import com.Maker.dao.ClinicRepo;
+import com.Maker.dao.ExpensesRepo;
 import com.Maker.dao.PatientToothRepo;
 import com.Maker.dao.UserDao;
 import com.Maker.model.*;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -61,6 +63,8 @@ public class ClinicController {
     @Autowired
     private PatientToothRepo patientToothRepo;
 
+    @Autowired
+    private ExpensesRepo expensesRepo;
     @PostMapping("/editClinicInfo")
     public ResponseEntity<Clinic> editClinicInfo(@RequestBody Clinic clinic){
         return ResponseEntity.ok().body(clinicService.editInfo(clinic));
@@ -145,11 +149,22 @@ public class ClinicController {
 
     // Todo api to get all Teeth for chart
 
-
-
+    @GetMapping("/getProfit")
+    private ResponseEntity<Float> getProfit(@RequestBody fromToDate fromTo){
+        return ResponseEntity.accepted().body(clinicService.getProfit(fromTo.getFrom(),fromTo.getTo()));
+    }
 
 
 }
+
+@Data
+class fromToDate{
+    Date from;
+    Date to;
+
+
+}
+
 
 @Data
 class changePass{

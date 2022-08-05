@@ -7,6 +7,7 @@ import com.Maker.model.PendingRequest;
 import com.Maker.model.UserDTO;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -15,4 +16,7 @@ public interface ClinicService {
     DAOUser createUser(int role, UserDTO userDTO);
     DAOUser changePassword(String username, String newPass);
     DAOUser changeUserInfo(DAOUser daoUser);
+
+    float getProfit(Date from , Date to);
+
 }

@@ -5,6 +5,7 @@ import com.Maker.model.Appointment;
 import com.Maker.model.NotFoundException;
 import com.Maker.model.ObjectAlreadyExist;
 import com.Maker.model.Patient;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -90,6 +91,12 @@ public class AppointmentServiceImp implements AppointmentService {
         return appointment1;
     }
 
+
+    @Override
+    public List<Appointment> Calendar (){
+        return appointmentRepo.findAll();
+    }
+
     public   boolean calculateConflict(Appointment oldAppointment,Appointment newAppointment)
     {
         if(newAppointment.getStartTime()>=oldAppointment.getStartTime() &&newAppointment.getStartTime()<=oldAppointment.getEndTime())
@@ -104,5 +111,17 @@ public class AppointmentServiceImp implements AppointmentService {
 
 
 
+
+}
+
+
+@Data
+class appointmentFrom {
+
+    int id;
+    String patientName;
+    Date date;
+    int startTime;
+    int endTime;
 
 }
