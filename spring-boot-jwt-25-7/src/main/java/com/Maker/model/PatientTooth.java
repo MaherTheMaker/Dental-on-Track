@@ -18,26 +18,24 @@ public class PatientTooth {
 
     private int patientId;
 
-    //Todo convert into enum : Color and Status
+
 
     @Column(length = 25)
     @Value("White")
     private String color="White";
 
-    @Column(length = 200)
-    @Value("normal")
-    private String status="Normal";
+    private ToothStatus status;
 
     @Column(length = 200)
     private String notes;
 
 
-    public PatientTooth(int toothId, int patientId, String color, String status, String notes) {
+    public PatientTooth(int toothId, int patientId, String color, ToothStatus status, String notes) {
         this.toothId = toothId;
         this.patientId = patientId;
-//        this.color = color;
-//        this.status = status;
-//        this.notes = notes;
+        this.color = color;
+        this.status = status;
+        this.notes = notes;
     }
 
     public PatientTooth() {
@@ -67,11 +65,11 @@ public class PatientTooth {
         this.color = color;
     }
 
-    public String getStatus() {
+    public ToothStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ToothStatus status) {
         this.status = status;
     }
 
@@ -82,5 +80,6 @@ public class PatientTooth {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+
 
 }

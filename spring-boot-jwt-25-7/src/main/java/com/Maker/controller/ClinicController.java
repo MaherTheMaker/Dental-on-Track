@@ -102,7 +102,7 @@ public class ClinicController {
         return ResponseEntity.ok().body(clinicRepo.findById(1));
     }
 
-    @PostMapping("/changePassword") //todo check for old password ...done
+    @PostMapping("/changePassword")
     public ResponseEntity<DAOUser> ChangePassword(@RequestBody changePass changePass) {
         DAOUser daoUser = userDao.findByUsername(changePass.username);
         if (bcryptEncoder.matches(changePass.oldPassword,daoUser.getPassword())) {
@@ -147,7 +147,6 @@ public class ClinicController {
         return ResponseEntity.ok(illnessService.getAllIllness());
     }
 
-    // Todo api to get all Teeth for chart
 
     @GetMapping("/getProfit")
     private ResponseEntity<Float> getProfit(@RequestBody fromToDate fromTo){

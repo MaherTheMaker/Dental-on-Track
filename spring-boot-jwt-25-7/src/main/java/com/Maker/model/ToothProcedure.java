@@ -25,7 +25,7 @@ public class ToothProcedure {
     private TreatmentPlan treatmentPlan;
 
     @ManyToOne
-    @JoinColumn(name="receipt_id",nullable = false)
+    @JoinColumn(name="receipt_id",nullable = true)
     @JsonIgnore
     private Receipt receipt;
 

@@ -3,7 +3,7 @@ package com.Maker.model;
 import javax.persistence.*;
 
 
-//Todo Bean just for one time  add Teeth list
+
 @Entity
 public class Tooth {
     @Id

@@ -2,10 +2,7 @@ package com.Maker.service;
 
 import com.Maker.dao.PatientToothRepo;
 import com.Maker.dao.ToothRepo;
-import com.Maker.model.NotFoundException;
-import com.Maker.model.Patient;
-import com.Maker.model.PatientTooth;
-import com.Maker.model.Tooth;
+import com.Maker.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -29,7 +26,7 @@ public class PatientToothServiceImp implements PatientToothService {
 
 
                 for (int i = 1; i <= 52 ; i++ ){
-                    patientToothRepo.save(new PatientTooth(toothRepo.findById(i).getId(),patient.getId(),null,null,null));
+                    patientToothRepo.save(new PatientTooth(toothRepo.findById(i).getId(),patient.getId(),null, ToothStatus.Normal,null));
             }
 
 

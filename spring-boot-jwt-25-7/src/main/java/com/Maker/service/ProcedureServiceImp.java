@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public class ProcedureServiceImp implements ProceduresService {
 
-    //TODO some validation...Done
+
 
 
     @Autowired
@@ -46,7 +46,6 @@ public class ProcedureServiceImp implements ProceduresService {
 
     @Override
     public MyProcedure editProcedure(String name, MyProcedure pro) {
-//Todo check if exist
         MyProcedure procedure = getProcedure(name);
         procedure.setpName(pro.getpName());
         procedure.setDefaultPrice(pro.getDefaultPrice());

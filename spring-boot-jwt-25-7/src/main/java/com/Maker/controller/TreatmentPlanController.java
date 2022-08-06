@@ -66,7 +66,7 @@ public class TreatmentPlanController {
 //        return ResponseEntity.accepted().body(treatmentPlanService.EditTreatmentPlan(treatmentPlan));
 //    }
 
-    // Todo add fun to add  Procedures to a TP
+
 }
 
 @Data
