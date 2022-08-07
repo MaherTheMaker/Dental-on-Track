@@ -11,6 +11,7 @@ public class Clinic
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	private boolean isActive;
 
 	private String ownerName;
 
@@ -42,7 +43,8 @@ public class Clinic
 	{
 	}
 
-	public Clinic(String ownerName, String username, String clinicName, Date createDate, Date updateDate, String mobilePhone, String clinicAddress, String clinicPhone, String actPlan  ) {
+	public Clinic(boolean isActive, String ownerName, String username, String clinicName, Date createDate, Date updateDate, String mobilePhone, String clinicAddress, String clinicPhone, String actPlan) {
+		this.isActive = isActive;
 		this.ownerName = ownerName;
 		this.username = username;
 		this.clinicName = clinicName;
@@ -138,4 +140,11 @@ public class Clinic
 	}
 
 
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean active) {
+		isActive = active;
+	}
 }

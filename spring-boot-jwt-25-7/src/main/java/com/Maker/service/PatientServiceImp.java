@@ -53,7 +53,7 @@ public class PatientServiceImp implements PatientService {
     public Patient DiagnosisOrEdit(Patient patient,int pId) {
 
         //todo check if exist
-        Patient oldPatient = patientRepo.findById(pId);
+        Patient oldPatient = getPatient(pId);
 
         oldPatient.setAge(patient.getAge());
         oldPatient.setDeciduousTeeth(patient.getDeciduousTeeth());
@@ -72,10 +72,12 @@ public class PatientServiceImp implements PatientService {
         if (result.getDeciduousTeeth()!=null)
         {
             //TODO check if Diagnosed Before
-           List<PatientTooth> test= patientToothService.GetPatientTeeth(pId);
-           if(test.isEmpty())
+            if (!result.isDiagnosed())
             patientToothService.addPatientTooth(result);
         }
+        result.setDiagnosed(true);
+
+        patientRepo.save(result);
 
 
         return result;

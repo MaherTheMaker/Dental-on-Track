@@ -18,7 +18,9 @@ public class PatientTooth {
 
     private int patientId;
 
-
+    public int getId() {
+        return id;
+    }
 
     @Column(length = 25)
     @Value("White")

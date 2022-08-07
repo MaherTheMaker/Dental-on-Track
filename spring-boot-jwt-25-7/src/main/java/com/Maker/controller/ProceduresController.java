@@ -14,7 +14,8 @@ import java.util.List;
 @RequestMapping("/Procedure")
 public class ProceduresController {
 
-    //TODO SOme Validation
+
+    //TODO Some Validation
     @Autowired
     private ProceduresService proceduresService;
 
@@ -43,11 +44,6 @@ public class ProceduresController {
     private ResponseEntity<MyProcedure> editProcedure(@PathVariable String name , @RequestBody MyProcedure myProcedure){
         return ResponseEntity.ok().body(proceduresService.editProcedure(name , myProcedure));
     }
-
-
-
-
-
 
 
 }

@@ -38,7 +38,8 @@ public class ClinicServiceImp implements ClinicService {
     private ReceiptRepo receiptRepo;
     @Override
     public Clinic editInfo(Clinic clinic) {
-        Clinic old= clinicRepo.findById(clinic.getId());
+        // have to be 1
+        Clinic old= clinicRepo.findById(1);
         if(old != null) {
             old.setClinicAddress(clinic.getClinicAddress());
             old.setClinicName(clinic.getClinicName());

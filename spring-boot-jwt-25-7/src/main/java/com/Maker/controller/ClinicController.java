@@ -18,6 +18,8 @@ import lombok.Data;
 import net.bytebuddy.implementation.auxiliary.AuxiliaryType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -29,6 +31,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.lang.reflect.ParameterizedType;
 import java.net.URI;
 import java.util.Date;
 import java.util.List;
@@ -79,8 +82,12 @@ public class ClinicController {
     {
         return new RestTemplate();
     }
+
     @PostMapping("/editClinicInfo")
     public ResponseEntity<Clinic> editClinicInfo(@RequestBody Clinic clinic){
+        rest.postForEntity(
+                "http://192.168.174.39:9090/clinic/editClinic/"+clinic.getUsername(), clinic,
+                Clinic.class,"");
         return ResponseEntity.ok().body(clinicService.editInfo(clinic));
     }
 
@@ -169,13 +176,23 @@ public class ClinicController {
 
 
     @PostMapping("/planRequest")
-    public ResponseEntity<PendingRequest> post(pendingRequestFrom pendingRequestFrom)
+    public String  planRequest(@RequestBody pendingRequestFrom pendingRequestFrom)
     {
-        return rest.postForEntity(
-                "http://localhost:9090/clinic/requestForPlan", pendingRequestFrom,
-                PendingRequest.class,"");
-
+        System.out.println(pendingRequestFrom.getPlanId()+pendingRequestFrom.getUsername());
+         rest.postForEntity(
+                "http://192.168.174.39:9090/clinic/requestForPlan", pendingRequestFrom,
+                String.class,"");
+return "Done";
     }
+
+    @GetMapping("/getAllPlans")
+    private ResponseEntity<List<Plan>> getAllPlans(){
+ResponseEntity<List<Plan>> listResponseEntity=       rest.exchange("http://192.168.174.39:9090/plan/all", HttpMethod.GET,null,new ParameterizedTypeReference<List<Plan>>(){});
+return ResponseEntity.ok().body(listResponseEntity.getBody());
+    }
+
+
+
 
 }
 
@@ -195,11 +212,14 @@ class changePass{
     public String newPassword;
 }
 
-
+@Data
+class ListOfPlans{
+    List<Plan> planList;
+}
 
 @Data
 class pendingRequestFrom
 {
-    private int cId;
-    private int  pId;
+    private String username;
+    private int  planId;
 }

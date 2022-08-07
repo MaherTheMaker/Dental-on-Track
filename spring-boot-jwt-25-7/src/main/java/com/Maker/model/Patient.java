@@ -20,6 +20,7 @@ public class Patient {
     @Column(nullable = false)
     private short age;
 
+    private boolean isDiagnosed;
 
     private Boolean deciduousTeeth;
     private String familyStatus;
@@ -52,6 +53,7 @@ public class Patient {
         this.habits = habits;
         this.gallery = gallery;
         this.filesList = filesList;
+        this.isDiagnosed=false;
     }
 
 
@@ -219,6 +221,14 @@ public class Patient {
 
     public void setAppointmentsList(List<Appointment> appointmentsList) {
         this.appointmentsList = appointmentsList;
+    }
+
+    public boolean isDiagnosed() {
+        return isDiagnosed;
+    }
+
+    public void setDiagnosed(boolean diagnosed) {
+        isDiagnosed = diagnosed;
     }
 
     //    public void setFilesList(List<File> filesList) {
