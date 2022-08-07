@@ -26,7 +26,6 @@ public class Patient {
     private float balance = 0.0f ;
     private DiscountType discountType;
 
-    //Todo move to separate table
 
     private Date lastVisitToADoctor;
     private String careWays;
@@ -55,13 +54,6 @@ public class Patient {
         this.filesList = filesList;
     }
 
-    //Todo join with a new table called Dental history
-    // dentalHistory dentalHistory;
-
-
-
-    //Todo join with a new table called Med History
-    //  MedHistory dentalHistory;
 
 
 

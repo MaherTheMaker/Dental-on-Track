@@ -12,7 +12,7 @@ public class MoneySafe {
 
     private String name;
 
-    //todo one to one
+
     @OneToOne(mappedBy = "safe", cascade = CascadeType.ALL, orphanRemoval = true)
     private DAOUser daoUsers;
 

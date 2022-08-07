@@ -25,11 +25,11 @@ public class Appointment {
 
 
 
-    //Todo how can declare a time
+
     @Column(nullable = false,unique = false)
     private int startTime;
 
-    //Todo how can declare a time
+
     @Column(nullable = false,unique = false)
     private int endTime;
 

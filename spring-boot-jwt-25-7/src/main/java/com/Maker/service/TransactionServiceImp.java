@@ -55,7 +55,6 @@ public class TransactionServiceImp implements TransactionService {
     @Override
     public List<Transaction> getAllSafeTransaction(String safeName) {
         MoneySafe safe = moneySafeService.getMoneySafe(safeName);
-        //Todo validation if MoneySafe Exists
         return transactionRepo.findAllBySafeName(safeName);
     }
 
@@ -63,7 +62,6 @@ public class TransactionServiceImp implements TransactionService {
     public List<Transaction> getAllTransactionBySafeAndDate(String safeName, LocalDate date) {
 
         MoneySafe safe = moneySafeService.getMoneySafe(safeName);
-        //Todo validation if MoneySafe Exists.
         return transactionRepo.findAllBySafeNameAndDate(safeName,date);
     }
 
