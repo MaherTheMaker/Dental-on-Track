@@ -88,7 +88,7 @@ public class PatientServiceImp implements PatientService {
 
     @Override
     public List<Patient> searchPatient(String name) {
-        List<Patient> patient = patientRepo.findAllByFullName(name);
+        List<Patient> patient = patientRepo.findAllByFullNameContaining(name);
         if(patient.isEmpty()){
             throw new NotFoundException("No Patient with this name");
         }
@@ -127,6 +127,7 @@ public class PatientServiceImp implements PatientService {
         MedHistory medHistory = new MedHistory();
         medHistory.setIllness(illness);
         medHistory.setPatient(patient);
+        medHistory.setNotes(notes);
         MedHistory me = medHisRepo.save(medHistory);
         patient.getMedHistoryList().add(medHistory);
         return me;

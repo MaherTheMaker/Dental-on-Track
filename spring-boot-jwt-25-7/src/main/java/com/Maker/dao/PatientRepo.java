@@ -10,7 +10,6 @@ import java.util.List;
 public interface PatientRepo extends JpaRepository<Patient, Integer> {
 
     List<Patient> findAllByFullName(String username);
-    //TODO
     List<Patient> findAllByFullNameContaining(String username);
     Patient findByFullName(String FullName);
     Patient findById(int id);

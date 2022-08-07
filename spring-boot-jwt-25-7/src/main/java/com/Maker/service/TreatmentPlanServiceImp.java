@@ -50,8 +50,7 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
     @Override
     public TreatmentPlan EditTreatmentPlan(int tpId,TreatmentPlan treatmentPlan) {
 
-        Optional<TreatmentPlan> optionalOldTreatmentPlan =treatmentPlanRepo.findById(tpId);
-        TreatmentPlan oldPlan=optionalOldTreatmentPlan.get();
+        TreatmentPlan oldPlan =getTreatmentPlan(tpId);
         oldPlan.setNotes(treatmentPlan.getNotes());
 //        oldPlan.setProceduresList(treatmentPlan.getProceduresList());
         return treatmentPlanRepo.save(oldPlan);
@@ -80,8 +79,7 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
 
     @Override
     public TreatmentPlan addToothProcedureToTreatmentPlan(int tpId, ToothProcedure toothProcedure) {
-        Optional<TreatmentPlan> optionalOldTreatmentPlan =treatmentPlanRepo.findById(tpId);
-        TreatmentPlan oldPlan=optionalOldTreatmentPlan.get();
+        TreatmentPlan oldPlan= getTreatmentPlan(tpId);
         oldPlan.getToothProcedures().add(toothProcedure);
         return treatmentPlanRepo.save(oldPlan);
     }

@@ -20,19 +20,20 @@ public class MedHistory {
     @JoinColumn(name="illness_id")
     private Illness illness;
 
-    public MedHistory(Patient patient, Illness illness) {
+
+
+    private String notes;
+
+    public MedHistory(Patient patient, Illness illness, String notes) {
         this.patient = patient;
         this.illness = illness;
+        this.notes = notes;
     }
-    private String notes;
 
 
     public MedHistory() {
     }
 
-    public int getId() {
-        return id;
-    }
 
 
     public Patient getPatient() {
@@ -45,6 +46,14 @@ public class MedHistory {
 
     public Illness getIllness() {
         return illness;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public void setIllness(Illness illness) {
