@@ -40,7 +40,7 @@ public class ReceiptServiceImp implements ReceiptService {
         receipt1.setPatient(patient);
         receipt1.setDiscount(receipt.isDiscount());
 
-
+    //Todo add toothProc
 
 
         MoneySafe moneySafe=moneySafeService.getMoneySafe(receipt.getSafeName());

@@ -12,6 +12,12 @@ public class ToothProcedure {
     private int id;
 
     @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name="patient_id",nullable = false)
+    private Patient patient;
+
+
+    @ManyToOne
     @JoinColumn(name="patientTooth_id",nullable = false)
     private PatientTooth patientTooth;
 
@@ -33,6 +39,7 @@ public class ToothProcedure {
     private float price;
 
     private boolean isDone=false;
+    private boolean isPaid=false;
 
     @Column(length = 200)
     private String notes;
@@ -100,5 +107,21 @@ public class ToothProcedure {
 
     public void setTreatmentPlan(TreatmentPlan treatmentPlan) {
         this.treatmentPlan = treatmentPlan;
+    }
+
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(boolean paid) {
+        isPaid = paid;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 }

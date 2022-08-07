@@ -20,6 +20,7 @@ public class Clinic
 
 	private String clinicName;
 
+	private String email;
 
 	private Date createDate;
 
@@ -43,11 +44,12 @@ public class Clinic
 	{
 	}
 
-	public Clinic(boolean isActive, String ownerName, String username, String clinicName, Date createDate, Date updateDate, String mobilePhone, String clinicAddress, String clinicPhone, String actPlan) {
+	public Clinic(boolean isActive, String ownerName, String username, String clinicName, String email, Date createDate, Date updateDate, String mobilePhone, String clinicAddress, String clinicPhone, String actPlan) {
 		this.isActive = isActive;
 		this.ownerName = ownerName;
 		this.username = username;
 		this.clinicName = clinicName;
+		this.email = email;
 		this.createDate = createDate;
 		this.updateDate = updateDate;
 		this.mobilePhone = mobilePhone;
@@ -146,5 +148,13 @@ public class Clinic
 
 	public void setActive(boolean active) {
 		isActive = active;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

@@ -204,6 +204,10 @@ public class Patient {
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MedHistory> medHistoryList;
 
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ToothProcedure> toothProcedures;
+
+
     public void setMedHistoryList(List<MedHistory> medHistoryList) {
         this.medHistoryList = medHistoryList;
     }
@@ -229,6 +233,14 @@ public class Patient {
 
     public void setDiagnosed(boolean diagnosed) {
         isDiagnosed = diagnosed;
+    }
+
+    public List<ToothProcedure> getToothProcedures() {
+        return toothProcedures;
+    }
+
+    public void setToothProcedures(List<ToothProcedure> toothProcedures) {
+        this.toothProcedures = toothProcedures;
     }
 
     //    public void setFilesList(List<File> filesList) {
