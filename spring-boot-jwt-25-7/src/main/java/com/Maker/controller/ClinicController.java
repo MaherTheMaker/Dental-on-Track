@@ -17,6 +17,7 @@ import com.Maker.service.PatientToothService;
 import lombok.Data;
 import net.bytebuddy.implementation.auxiliary.AuxiliaryType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -25,6 +26,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -65,6 +67,18 @@ public class ClinicController {
 
     @Autowired
     private ExpensesRepo expensesRepo;
+
+
+    @Autowired
+    private RestTemplate rest = new RestTemplate();
+
+    // Annotation
+    @Bean
+// Method
+    public RestTemplate restTemplate()
+    {
+        return new RestTemplate();
+    }
     @PostMapping("/editClinicInfo")
     public ResponseEntity<Clinic> editClinicInfo(@RequestBody Clinic clinic){
         return ResponseEntity.ok().body(clinicService.editInfo(clinic));
@@ -155,6 +169,15 @@ public class ClinicController {
     }
 
 
+    @PostMapping("/planRequest")
+    public ResponseEntity<PendingRequest> post(pendingRequestFrom pendingRequestFrom)
+    {
+        return rest.postForEntity(
+                "http://localhost:9090/clinic/requestForPlan", pendingRequestFrom,
+                PendingRequest.class,"");
+
+    }
+
 }
 
 @Data
@@ -178,6 +201,6 @@ class changePass{
 @Data
 class pendingRequestFrom
 {
-    private String username;
-    private String planName;
+    private int cId;
+    private int  pId;
 }
