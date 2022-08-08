@@ -93,7 +93,7 @@ public class PatientController {
     }
 
 
-    @GetMapping("/{id}/editTooth")
+    @PostMapping("/{id}/editTooth")
     public ResponseEntity<PatientTooth> editPatientTooth (@PathVariable int id ,@RequestBody PatientTooth patientTooth)
     {
         return ResponseEntity.accepted().body(patientToothService.EditPatientTeeth(id,patientTooth));
