@@ -22,6 +22,5 @@ public interface PatientService {
     List<File> getAllFile(int id);
     List<MedHistory> getAllMedHis(int id);
 
-
 }
 

@@ -33,4 +33,6 @@ public interface TreatmentPlanService {
     List<ToothProcedure> getAllToothProceduresByTreatmentPlan(TreatmentPlan treatmentPlan);
 
      List<ToothProcedure> getAllUnpaidTP(int pId, boolean paid);
+
+    List<PatientFinancialDetails> getPatientFinancialDetails();
 }

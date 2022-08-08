@@ -7,9 +7,11 @@ import com.Maker.dao.MedHisRepo;
 import com.Maker.dao.PatientRepo;
 //import com.Maker.model.File;
 import com.Maker.model.*;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -34,6 +36,8 @@ public class PatientServiceImp implements PatientService {
 
     @Autowired
     private IllnessService illnessService;
+
+
 
 
     @Override
@@ -152,4 +156,11 @@ public class PatientServiceImp implements PatientService {
     }
 
 
+
+
+
 }
+
+
+
+

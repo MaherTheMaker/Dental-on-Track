@@ -17,10 +17,6 @@ public class ToothProcedureServiceImp implements ToothProcedureService {
     private ToothProcedureRepo toothProcedureRepo;
 
 
-
-
-
-
     @Override
     public ToothProcedure doToothProcedure(int id) {
                ToothProcedure toothProcedure= toothProcedureRepo.findById(id).get();
@@ -58,5 +54,7 @@ public class ToothProcedureServiceImp implements ToothProcedureService {
                 .sum();
         return sum;
     }
+
+
 }
 

@@ -9,11 +9,8 @@ import com.Maker.dao.PatientToothRepo;
 import com.Maker.dao.UserDao;
 import com.Maker.model.*;
 
-import com.Maker.service.ClinicService;
-import com.Maker.service.IllnessService;
-import com.Maker.service.JwtUserDetailsService;
+import com.Maker.service.*;
 
-import com.Maker.service.PatientToothService;
 import lombok.Data;
 import net.bytebuddy.implementation.auxiliary.AuxiliaryType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +51,8 @@ public class ClinicController {
 
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private MoneySafeService moneySafeService;
 
     @Autowired
     private JwtUserDetailsService userDetailsService;
@@ -93,7 +92,11 @@ public class ClinicController {
 
     @PostMapping("/createUser/{role}") //todo limit user number in clinic
     public ResponseEntity<DAOUser> createUser(@PathVariable int role, @RequestBody UserDTO userDTO){
-        return ResponseEntity.ok().body(clinicService.createUser(role,userDTO));
+        DAOUser daoUser=clinicService.createUser(role,userDTO);
+
+        moneySafeService.addMoneySafe(new MoneySafe(
+                daoUser.getUsername(), daoUser,"Secondary",0.0f,null,null,null),daoUser.getId());
+        return ResponseEntity.ok().body(daoUser);
     }
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
@@ -130,6 +133,11 @@ public class ClinicController {
             return ResponseEntity.ok().body(clinicService.changePassword(changePass.username, changePass.newPassword));
         }else
             return null;
+    }
+
+    @GetMapping("/getUsers")
+    public ResponseEntity<List<DAOUser>> getUsers(){
+        return ResponseEntity.ok().body(clinicService.getAllUsers());
     }
 
 

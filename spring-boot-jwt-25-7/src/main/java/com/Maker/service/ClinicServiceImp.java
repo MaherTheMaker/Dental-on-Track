@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class ClinicServiceImp implements ClinicService {
@@ -48,6 +47,11 @@ public class ClinicServiceImp implements ClinicService {
             return clinicRepo.save(old);
         } else throw new NotFoundException("no Clinic with this information");
 
+
+    }
+    @Override
+    public List<DAOUser> getAllUsers() {
+    return userDao.findAll();
 
     }
 

@@ -1,5 +1,7 @@
 package com.Maker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -13,6 +15,7 @@ public class MoneySafe {
     private String name;
 
 
+    @JsonIgnore
     @OneToOne(mappedBy = "safe", cascade = CascadeType.ALL, orphanRemoval = true)
     private DAOUser daoUsers;
 
@@ -21,13 +24,14 @@ public class MoneySafe {
 
     private float balance ;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "moneySafe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Receipt> receipt;
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "moneySafe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Expenses> expenses;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "fromSafe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Transaction> transactionList;
 

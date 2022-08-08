@@ -5,8 +5,8 @@ import com.Maker.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class TreatmentPlanServiceImp implements TreatmentPlanService {
@@ -160,10 +160,22 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
     @Override
     public List<ToothProcedure> getAllUnpaidTP(int pId, boolean paid){
         Patient patient = patientService.getPatient(pId);
-        return toothProcedureRepo.findAllByPatientAndIsPaid(patient,false);
+        return toothProcedureRepo.findAllByPatientAndIsPaid(patient,paid);
     }
 
+    @Override
+    public List<PatientFinancialDetails> getPatientFinancialDetails(){
+        List<PatientFinancialDetails> patientFinancialDetails = new ArrayList<>();
+        for (Patient patient: patientService.getAllPatients()){
+            float unpaid = (float) getAllUnpaidTP(patient.getId(),false).stream().mapToDouble(x -> x.getPrice())
+                    .sum();
+            float paid = (float) getAllUnpaidTP(patient.getId(),true).stream().mapToDouble(x -> x.getPrice())
+                    .sum();
+            patientFinancialDetails.add(new PatientFinancialDetails(patient.getFullName(),unpaid,paid));
 
+        }
+        return patientFinancialDetails;
+    }
 
 }
 

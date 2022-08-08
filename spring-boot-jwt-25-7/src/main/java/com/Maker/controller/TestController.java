@@ -23,7 +23,8 @@ public class TestController {
     @Autowired
     private ReceiptService receiptService;
 
-
+    @Autowired
+    private PatientService patientService;
     @Autowired
     private ExpensesService expensesService;
 
@@ -210,22 +211,24 @@ public class TestController {
     }
 
 
+    @GetMapping("/PatientsBalance")
+    private ResponseEntity<List<PatientFinancialDetails>> getPatientFinancialDetails () {
+        return (ResponseEntity<List<PatientFinancialDetails>>) ResponseEntity.ok().body(treatmentPlanService.getPatientFinancialDetails());
+    }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @GetMapping("/{pid}/patientPaidUnPaid")
+    private ResponseEntity<PatientPaidUnPaid> PatientPaidUnPaid (@PathVariable int pid){
+            PatientPaidUnPaid patientPaidUnPaid = new PatientPaidUnPaid();
+            patientPaidUnPaid.setUnpaid((float) treatmentPlanService.getAllUnpaidTP(pid,false).stream().mapToDouble(x -> x.getPrice())
+                    .sum());
+            patientPaidUnPaid.setPaid((float) treatmentPlanService.getAllUnpaidTP(pid,true).stream().mapToDouble(x -> x.getPrice())
+                    .sum());
+            return ResponseEntity.ok().body(patientPaidUnPaid);
+    }
 }
+
+
 
 @Data
 class SafeParam {
@@ -258,3 +261,8 @@ class LocalDateAndSafeName {
         String safeName;
 }
 
+@Data
+class PatientPaidUnPaid{
+    float paid;
+    float unpaid;
+}
