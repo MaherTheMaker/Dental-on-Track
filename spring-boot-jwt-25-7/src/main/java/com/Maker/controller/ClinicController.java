@@ -43,6 +43,7 @@ public class ClinicController {
     @Autowired
     private ClinicRepo clinicRepo;
 
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -203,6 +204,9 @@ return ResponseEntity.ok().body(listResponseEntity.getBody());
 
 
 }
+
+
+
 
 @Data
 class fromToDate{

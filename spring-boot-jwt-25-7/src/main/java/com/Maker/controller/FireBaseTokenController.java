@@ -1,6 +1,8 @@
 package com.Maker.controller;
 
+import com.Maker.model.EmailDetails;
 import com.Maker.model.FireBaseToken;
+import com.Maker.service.EmailService;
 import com.Maker.service.FireBaseTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ public class FireBaseTokenController {
 
 
 
+
     @PostMapping("/saveToken")
     private ResponseEntity<FireBaseToken> addFireBaseToken(@RequestBody FireBaseToken fireBaseToken){
             return ResponseEntity.ok().body(fireBaseTokenService.addSToken(fireBaseToken));
@@ -26,6 +29,10 @@ public class FireBaseTokenController {
     private ResponseEntity<FireBaseToken> getFireBasetoken(@PathVariable String username){
         return ResponseEntity.ok().body(fireBaseTokenService.getSToken(username));
     }
+
+
+
+
 
 
 
