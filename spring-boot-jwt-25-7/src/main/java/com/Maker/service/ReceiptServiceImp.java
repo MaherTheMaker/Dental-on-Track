@@ -54,13 +54,10 @@ public class ReceiptServiceImp implements ReceiptService {
         receipt1.setProcedure(new ArrayList<ToothProcedure>());
         for(int i = 0 ; i < receipt.Ids.size() ;i++) {
             ToothProcedure toothProcedure = treatmentPlanService.getToothProcedure(receipt.Ids.get(i));
-            if(!toothProcedure.isPaid()) {
                 toothProcedure.setPaid(true);
                 toothProcedureRepo.save(toothProcedure);
                 receipt1.getProcedure().add(toothProcedure);
                 finalTotal += toothProcedure.getPrice();
-            } else throw new RejectedExecutionException("u already Paid");
-    //Todo add toothProc
 
         }
         MoneySafe moneySafe=moneySafeService.getMoneySafe(receipt.getSafeName());

@@ -88,8 +88,7 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
 
     @Override
     public TreatmentPlan addToothProcedure(int tpId,int pId,int proId,int PtId, ToothProcedure toothProcedure) {
-        ToothProcedure newToothP = toothProcedure;
-        //Patient link
+        Patient patient = patientService.getPatient(pId);
         MyProcedure myProcedure = myProcedureRepo.findById(proId);
         PatientTooth patientTooth = patientToothRepo.findById(PtId).get();
         TreatmentPlan treatmentPlan = treatmentPlanRepo.findById(tpId).get();
@@ -97,12 +96,14 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
         {
             throw new NotFoundException("Procedure, Patient tooth or Treatment Plan not found ");
         }
-        newToothP.setPatientTooth(patientTooth);
-        newToothP.setProcedure(myProcedure);
-        newToothP.setTreatmentPlan(treatmentPlan);
-
-        return addToothProcedureToTreatmentPlan(tpId,toothProcedure);
+        toothProcedure.setPatientTooth(patientTooth);
+        toothProcedure.setProcedure(myProcedure);
+        toothProcedure.setTreatmentPlan(treatmentPlan);
+        toothProcedure.setPatient(patient);
+        toothProcedure.setPaid(false);
+        return addToothProcedureToTreatmentPlan(tpId, toothProcedure);
     }
+
 
     @Override
     public TreatmentPlan removeToothProcedureFromTreatmentPlan(int tpId, int TProcId) {

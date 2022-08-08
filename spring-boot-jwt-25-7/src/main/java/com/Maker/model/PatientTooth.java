@@ -18,10 +18,6 @@ public class PatientTooth {
 
     private int patientId;
 
-    public int getId() {
-        return id;
-    }
-
     @Column(length = 25)
     @Value("White")
     private String color="White";
@@ -83,5 +79,7 @@ public class PatientTooth {
         this.notes = notes;
     }
 
-
+    public int getId() {
+        return id;
+    }
 }
