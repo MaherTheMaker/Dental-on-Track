@@ -71,9 +71,8 @@ public class PatientServiceImp implements PatientService {
 
         if (result.getDeciduousTeeth()!=null)
         {
-            //TODO check if Diagnosed Before
             if (!result.isDiagnosed())
-            patientToothService.addPatientTooth(result);
+            patientToothService.addPatientTooth(result.getId());
         }
         result.setDiagnosed(true);
 

@@ -4,6 +4,7 @@ package com.Maker.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
+import java.util.List;
 
 public class ReceiptForm {
    public String Username;
@@ -14,12 +15,16 @@ public class ReceiptForm {
    public Date date;
    public  float total;
 
-    public ReceiptForm(String username, String safeName, String procedureName, Date date, float total) {
+   public List<Integer> Ids;
+
+    public ReceiptForm(String username, String safeName, String procedureName, boolean discount, Date date, float total, List<Integer> ids) {
         Username = username;
         this.safeName = safeName;
         this.procedureName = procedureName;
+        this.discount = discount;
         this.date = date;
         this.total = total;
+        Ids = ids;
     }
 
     public ReceiptForm() {
@@ -71,5 +76,13 @@ public class ReceiptForm {
 
     public void setTotal(float total) {
         this.total = total;
+    }
+
+    public List<Integer> getIds() {
+        return Ids;
+    }
+
+    public void setIds(List<Integer> ids) {
+        Ids = ids;
     }
 }

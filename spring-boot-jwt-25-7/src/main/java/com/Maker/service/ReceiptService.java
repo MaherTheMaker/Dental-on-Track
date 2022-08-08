@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface ReceiptService {
-    Receipt add(int id, ReceiptForm receipt);
+    Receipt add(int id, ReceiptForm receipt );
     Receipt editReceipt(int id, Receipt receipt);
     Receipt getReceipt(int id);
     List<Receipt> getAllReceipt(Date date);

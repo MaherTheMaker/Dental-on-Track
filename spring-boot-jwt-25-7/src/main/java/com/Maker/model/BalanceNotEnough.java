@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
 public class BalanceNotEnough extends RuntimeException {
 
-        private String message;
+    private String message;
 
     public BalanceNotEnough() {}
 

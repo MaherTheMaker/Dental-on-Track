@@ -1,14 +1,17 @@
 package com.Maker.service;
 
 
+import com.Maker.dao.ToothProcedureRepo;
 import com.Maker.model.*;
 import com.Maker.dao.ReceiptRepo;
 import com.Maker.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.RejectedExecutionException;
 
 @Repository
 public class ReceiptServiceImp implements ReceiptService {
@@ -26,11 +29,19 @@ public class ReceiptServiceImp implements ReceiptService {
     @Autowired
     private MoneySafeService moneySafeService;
 
+    @Autowired
+    private ToothProcedureRepo toothProcedureRepo;
+
+    @Autowired
+    private TreatmentPlanService treatmentPlanService;
+
 
     @Autowired
     private ProceduresService proceduresService;
 
-    public Receipt add(int id, ReceiptForm receipt) {
+
+    @Override
+    public Receipt add(int id, ReceiptForm receipt ) {
         Receipt receipt1 = new Receipt();
         receipt1.setUserName(receipt.getUsername());
         receipt1.setSafeName(receipt.getSafeName());
@@ -39,27 +50,29 @@ public class ReceiptServiceImp implements ReceiptService {
         receipt1.setPatientName(patient.getFullName());
         receipt1.setPatient(patient);
         receipt1.setDiscount(receipt.isDiscount());
-
+        float finalTotal = 0 ;
+        receipt1.setProcedure(new ArrayList<ToothProcedure>());
+        for(int i = 0 ; i < receipt.Ids.size() ;i++) {
+            ToothProcedure toothProcedure = treatmentPlanService.getToothProcedure(receipt.Ids.get(i));
+            if(!toothProcedure.isPaid()) {
+                toothProcedure.setPaid(true);
+                toothProcedureRepo.save(toothProcedure);
+                receipt1.getProcedure().add(toothProcedure);
+                finalTotal += toothProcedure.getPrice();
+            } else throw new RejectedExecutionException("u already Paid");
     //Todo add toothProc
 
-
+        }
         MoneySafe moneySafe=moneySafeService.getMoneySafe(receipt.getSafeName());
         receipt1.setMoneySafe(moneySafe);
 
-        float amount;
-
-
         if(receipt1.isDiscount()&&patient.getDiscountType()!=null) {
             float discountPercent = patient.getDiscountType().value;
-            amount = receipt.getTotal() - receipt.getTotal() * discountPercent;
+            receipt1.setTotal(finalTotal - finalTotal* discountPercent);
+
         }
-        else
-            amount=receipt.getTotal();
-
-        moneySafeService.AddBalancedMoneySafe(moneySafe.getId(),amount);
-
-        receipt1.setTotal(amount);
-
+        else receipt1.setTotal(finalTotal);
+        moneySafeService.AddBalancedMoneySafe(moneySafe.getId(),finalTotal);
         receipt1.setDaoUser(userDao.findByUsername(receipt.getUsername()));
 
 
@@ -104,6 +117,8 @@ public class ReceiptServiceImp implements ReceiptService {
 
         return receiptRepo.findAll();
     }
+
+
 
 
 

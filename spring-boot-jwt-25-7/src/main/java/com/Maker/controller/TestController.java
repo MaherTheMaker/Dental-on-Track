@@ -30,6 +30,9 @@ public class TestController {
     @Autowired
     private TransactionService transactionService;
 
+    @Autowired
+    private TreatmentPlanService treatmentPlanService;
+
     @PostMapping("/AddSafe/{uID}")
     private ResponseEntity<MoneySafe> AddSafe(@PathVariable int uID, @RequestBody MoneySafe moneySafe){
         return ResponseEntity.ok().body(moneySafeService.addMoneySafe(moneySafe,uID));
@@ -70,6 +73,12 @@ public class TestController {
     @PostMapping("/Receipt/{id}/edit")
     private  ResponseEntity<Receipt> editReceipt(@PathVariable int id, @RequestBody Receipt receipt){
         return ResponseEntity.accepted().body(receiptService.editReceipt(id,receipt));
+    }
+
+
+    @GetMapping("/getPatientToothProcedureUnpaid/{pid}")
+    private ResponseEntity<List<ToothProcedure>> getPatientToothProcedure (@PathVariable int pid){
+        return ResponseEntity.ok().body(treatmentPlanService.getAllUnpaidTP(pid,false));
     }
 
 

@@ -14,7 +14,7 @@ public class PatientTooth {
 
     //Todo Foreign keys with Tooth and patient
 
-    private int toothId;
+    private String toothId;
 
     private int patientId;
 
@@ -32,7 +32,7 @@ public class PatientTooth {
     private String notes;
 
 
-    public PatientTooth(int toothId, int patientId, String color, ToothStatus status, String notes) {
+    public PatientTooth(String toothId, int patientId, String color, ToothStatus status, String notes) {
         this.toothId = toothId;
         this.patientId = patientId;
         this.color = color;
@@ -43,11 +43,11 @@ public class PatientTooth {
     public PatientTooth() {
     }
 
-    public int getToothId() {
+    public String getToothId() {
         return toothId;
     }
 
-    public void setToothId(int toothId) {
+    public void setToothId(String toothId) {
         this.toothId = toothId;
     }
 

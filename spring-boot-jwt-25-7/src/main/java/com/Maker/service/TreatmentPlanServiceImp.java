@@ -61,7 +61,7 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
     public TreatmentPlan getTreatmentPlan(int id) {
 
        Boolean treatmentPlan = treatmentPlanRepo.findById(id).isPresent();
-       if(treatmentPlan) {
+       if(treatmentPlan.equals(false)) {
            return treatmentPlanRepo.findById(id).get();
        }else throw new NotFoundException("treatment Plan not found");
     }
@@ -81,6 +81,7 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
     public TreatmentPlan addToothProcedureToTreatmentPlan(int tpId, ToothProcedure toothProcedure) {
         TreatmentPlan oldPlan= getTreatmentPlan(tpId);
         oldPlan.getToothProcedures().add(toothProcedure);
+        oldPlan.setPatient(oldPlan.getPatient());
         return treatmentPlanRepo.save(oldPlan);
     }
 
@@ -89,11 +90,9 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
     public TreatmentPlan addToothProcedure(int tpId,int pId,int proId,int PtId, ToothProcedure toothProcedure) {
         ToothProcedure newToothP = toothProcedure;
         //Patient link
-
         MyProcedure myProcedure = myProcedureRepo.findById(proId);
         PatientTooth patientTooth = patientToothRepo.findById(PtId).get();
         TreatmentPlan treatmentPlan = treatmentPlanRepo.findById(tpId).get();
-        Patient patient =treatmentPlan.getPatient();
         if (myProcedure == null || !patientToothRepo.existsById(PtId) || !treatmentPlanRepo.existsById(tpId))
         {
             throw new NotFoundException("Procedure, Patient tooth or Treatment Plan not found ");
@@ -101,7 +100,7 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
         newToothP.setPatientTooth(patientTooth);
         newToothP.setProcedure(myProcedure);
         newToothP.setTreatmentPlan(treatmentPlan);
-        newToothP.setPatient(patient);
+
         return addToothProcedureToTreatmentPlan(tpId,toothProcedure);
     }
 
@@ -156,6 +155,12 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
         return toothProcedureRepo.findAllByTreatmentPlan(treatmentPlan);
     }
 
+
+    @Override
+    public List<ToothProcedure> getAllUnpaidTP(int pId, boolean paid){
+        Patient patient = patientService.getPatient(pId);
+        return toothProcedureRepo.findAllByPatientAndIsPaid(patient,false);
+    }
 
 
 
