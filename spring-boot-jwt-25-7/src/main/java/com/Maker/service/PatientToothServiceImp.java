@@ -47,16 +47,14 @@ public class PatientToothServiceImp implements PatientToothService {
 
     @Override
     public PatientTooth EditPatientTeeth(int PTID, PatientTooth patientTooth) {
-            Boolean found;
-            if(found = patientToothRepo.existsById(PTID)){
-                PatientTooth oldTooth=patientToothRepo.findById(PTID).get();
+            if(patientToothRepo.existsById(PTID)){
+            PatientTooth oldTooth=patientToothRepo.findById(PTID).get();
                 oldTooth.setNotes(patientTooth.getNotes());
-                oldTooth.setColor(oldTooth.getColor());
-                oldTooth.setStatus(oldTooth.getStatus());
+                oldTooth.setColor(patientTooth.getColor());
+                oldTooth.setStatus(patientTooth.getStatus());
                 return   patientToothRepo.save(oldTooth);
             }
             else throw new NotFoundException("No patientTooth with this information");
-
 
     }
 
