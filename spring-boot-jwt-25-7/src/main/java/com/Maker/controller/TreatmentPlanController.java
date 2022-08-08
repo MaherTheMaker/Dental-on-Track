@@ -59,12 +59,12 @@ public class TreatmentPlanController {
         return ResponseEntity.accepted().body(treatmentPlanService.addToothProcedure(TpId,addToTreatment.pId,addToTreatment.ProcId,addToTreatment.PTId, addToTreatment.toothProcedure));
     }
 
-//
-//    @PostMapping("/{id}/DoToothProcedure")
-//    private ResponseEntity<TreatmentPlan> DoToothProcedure(@PathVariable int id , @RequestBody TreatmentPlan treatmentPlan)
-//    {
-//        return ResponseEntity.accepted().body(treatmentPlanService.EditTreatmentPlan(treatmentPlan));
-//    }
+
+    @PostMapping("/{id}/DoToothProcedure")
+    private ResponseEntity<ToothProcedure> DoToothProcedure(@PathVariable int id)
+    {
+        return ResponseEntity.accepted().body(treatmentPlanService.doToothProcedure(id));
+    }
 
 
 }

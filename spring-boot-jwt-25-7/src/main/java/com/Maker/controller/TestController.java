@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Test")
+@RequestMapping("/Financial")
 public class TestController {
     @Autowired
     private MoneySafeService moneySafeService;
@@ -86,9 +86,13 @@ public class TestController {
         return ResponseEntity.ok().body(treatmentPlanService.getAllUnpaidTP(pid,false));
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<Float>  getTest(){
-        return ResponseEntity.ok().body(toothProcedureService.getTotalExpenses());
+    @GetMapping("/Dashboard")
+    public ResponseEntity<SafeParam>  getTest(){
+        SafeParam safeParam = new SafeParam();
+        safeParam.setAllExpenses(expensesService.getTotalExpenses());
+        safeParam.setAllRevenue(receiptService.getTotalReceipt());
+        safeParam.setAllUnpaid(toothProcedureService.getTotalExpenses());
+        return ResponseEntity.ok().body(safeParam);
     }
 
     @GetMapping("/Receipt/{id}/getReceipt")
@@ -158,7 +162,6 @@ public class TestController {
     @GetMapping("/expense/getBySafe/{name}")
     private ResponseEntity<List<Expenses>> getAllExpensesBySafe(@PathVariable String name){
 
-        System.out.println( name);
 
         return ResponseEntity.ok().body(expensesService.getMoneySafeExpenses(name));
 
@@ -169,6 +172,8 @@ public class TestController {
 
         return ResponseEntity.ok().body(expensesService.getMoneySafeExpensesInDate(dateAndSafeName.safeName,dateAndSafeName.d));
     }
+
+
 
 
     //TRANSACTION
@@ -222,6 +227,12 @@ public class TestController {
 
 }
 
+@Data
+class SafeParam {
+    float AllExpenses ;
+    float AllRevenue;
+    float AllUnpaid;
+}
 
 
 @Data
