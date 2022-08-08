@@ -16,4 +16,10 @@ public interface ReceiptService {
     List<Receipt> getAllReceipt(Date date);
     List<Receipt> getAllReceiptRange(Date startDate,Date endDate);
     List<Receipt> getAllReceipt();
+
+    List<Receipt> getAllReceiptBySafe(String safeName);
+
+    List<Receipt> getAllReceiptBySafeAndDate(String safeName, Date date);
+
+    float getTotalReceipt();
 }

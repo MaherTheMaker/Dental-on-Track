@@ -14,4 +14,6 @@ public interface ExpensesService {
     List<Expenses> getMoneySafeExpenses(String safeName);
 
     List<Expenses> getMoneySafeExpensesInDate(String safeName,Date date);
+
+    float getTotalExpenses ();
 }

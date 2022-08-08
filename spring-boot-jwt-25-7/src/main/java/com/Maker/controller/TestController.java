@@ -2,6 +2,7 @@ package com.Maker.controller;
 
 
 
+import com.Maker.dao.ReceiptRepo;
 import com.Maker.model.*;
 import com.Maker.service.*;
 import lombok.Data;
@@ -32,6 +33,10 @@ public class TestController {
 
     @Autowired
     private TreatmentPlanService treatmentPlanService;
+
+
+    @Autowired
+    private ToothProcedureService toothProcedureService;
 
     @PostMapping("/AddSafe/{uID}")
     private ResponseEntity<MoneySafe> AddSafe(@PathVariable int uID, @RequestBody MoneySafe moneySafe){
@@ -81,17 +86,29 @@ public class TestController {
         return ResponseEntity.ok().body(treatmentPlanService.getAllUnpaidTP(pid,false));
     }
 
-
+    @GetMapping("/test")
+    public ResponseEntity<Float>  getTest(){
+        return ResponseEntity.ok().body(toothProcedureService.getTotalExpenses());
+    }
 
     @GetMapping("/Receipt/{id}/getReceipt")
     private ResponseEntity<Receipt> getReceipt(@PathVariable int id ){
         return ResponseEntity.ok().body(receiptService.getReceipt(id));
     }
 
+    @GetMapping("/Receipt/getBySafe/{safeName}")
+    private ResponseEntity<List<Receipt>> getAllReceiptBySafe(@PathVariable String safeName){
+        return ResponseEntity.ok().body(receiptService.getAllReceiptBySafe(safeName));
+    }
 
+    @GetMapping("/Receipt/getBySafeNameAndDate/{safeName}")
+    private ResponseEntity<List<Receipt>> getAllReceiptBySafeAndByDate(@PathVariable String safeName,@RequestBody date date1){
+
+        return ResponseEntity.ok().body(receiptService.getAllReceiptBySafeAndDate(safeName,date1.date));
+
+    }
     @GetMapping("/Receipt/getByDate")
     private ResponseEntity<List<Receipt>> getAllReceiptByDate(@RequestBody date date1){
-        System.out.printf(date1.date.toString());
 
         return ResponseEntity.ok().body(receiptService.getAllReceipt(date1.date));
 

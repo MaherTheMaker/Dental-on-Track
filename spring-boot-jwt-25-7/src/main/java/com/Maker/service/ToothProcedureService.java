@@ -20,4 +20,5 @@ public interface ToothProcedureService {
     List<ToothProcedure> getAllToothProceduresByTreatmentPlan(TreatmentPlan treatmentPlan);
 
 
+    float getTotalExpenses();
 }

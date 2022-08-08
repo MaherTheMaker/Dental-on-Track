@@ -15,8 +15,8 @@ import java.util.List;
 
 public interface ReceiptRepo extends JpaRepository<Receipt,Integer> {
 
-    List<Expenses> findAllBySafeName(String safeName);
-    List<Expenses> findAllBySafeNameAndDate(String SafeName,Date date);
+    List<Receipt> findAllBySafeName(String safeName);
+    List<Receipt> findAllBySafeNameAndDate(String SafeName,Date date);
     List<Receipt> findAllByDate(Date date);
     List<Receipt> findAllByDateBetween(Date date1, Date date2);
 

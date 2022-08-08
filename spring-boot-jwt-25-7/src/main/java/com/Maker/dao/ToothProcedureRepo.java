@@ -14,4 +14,7 @@ public interface ToothProcedureRepo extends JpaRepository<ToothProcedure,Integer
     List<ToothProcedure> findAllByPatientAndIsPaid(Patient patient , boolean paid);
 
 
+    List<ToothProcedure> findAllByIsPaidAndIsDone(boolean paid , boolean done);
+
+
 }

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.RejectedExecutionException;
 
 @Repository
 public class ReceiptServiceImp implements ReceiptService {
@@ -115,8 +114,28 @@ public class ReceiptServiceImp implements ReceiptService {
         return receiptRepo.findAll();
     }
 
+    @Override
+    public List<Receipt> getAllReceiptBySafe(String safeName){
+        if(moneySafeService.getMoneySafe(safeName)!=null) {
+            return receiptRepo.findAllBySafeName(safeName);
+        }else throw new NotFoundException("Money Safe is not found");
+    }
+
+    @Override
+    public List<Receipt> getAllReceiptBySafeAndDate(String safeName , Date date){
+        if(moneySafeService.getMoneySafe(safeName)!=null) {
+            return receiptRepo.findAllBySafeNameAndDate(safeName , date);
+        }else throw new NotFoundException("Money Safe is not found");
+    }
 
 
+    @Override
+    public float getTotalReceipt() {
+        float sum = (float) receiptRepo.findAll().stream()
+                .mapToDouble(x -> x.getTotal())
+                .sum();
+        return sum;
+    }
 
 
 }

@@ -51,5 +51,12 @@ public class ToothProcedureServiceImp implements ToothProcedureService {
     }
 
 
+     @Override
+    public float getTotalExpenses() {
+        float sum = (float) toothProcedureRepo.findAllByIsPaidAndIsDone(false,true).stream()
+                .mapToDouble(x -> x.getPrice())
+                .sum();
+        return sum;
+    }
 }
 

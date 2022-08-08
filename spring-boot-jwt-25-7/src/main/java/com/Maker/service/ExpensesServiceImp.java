@@ -79,6 +79,14 @@ public class ExpensesServiceImp implements ExpensesService {
         return expensesRepo.findAllBySafeNameAndDate(safeName,date);
     }
 
+    @Override
+    public float getTotalExpenses() {
+        float sum = (float) expensesRepo.findAll().stream()
+                .mapToDouble(x -> x.getTotalPrice())
+                .sum();
+        return sum;
+    }
+
 }
 
 
