@@ -1,5 +1,6 @@
 package com.Maker.controller;
 
+import com.Maker.model.DAOUser;
 import com.Maker.model.EmailDetails;
 import com.Maker.service.EmailService;
 import com.Maker.service.FireBaseTokenService;
@@ -20,9 +21,9 @@ public class EmailController {
     @Value("${spring.mail.username}")
     private String sender;
 
-    @PostMapping("/sendMail/{username}")
-    public String
-    sendMail(@RequestBody EmailDetails details , @PathVariable String username)
+
+
+    public String  sendMail(DAOUser daoUser)
     {
         try {
 
@@ -32,9 +33,9 @@ public class EmailController {
 
             // Setting up necessary details
             mailMessage.setFrom(sender);
-            mailMessage.setTo(details.getRecipient());
-            mailMessage.setText("\nusername:" + username + details.getMsgBody());
-            mailMessage.setSubject(details.getSubject());
+            mailMessage.setTo(daoUser.getEmail());
+            mailMessage.setText("\nusername: " + daoUser.getUsername() + "\nPassword: 1234");
+            mailMessage.setSubject("LoginInformation");
 
             // Sending the mail
             javaMailSender.send(mailMessage);
