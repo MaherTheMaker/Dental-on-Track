@@ -60,8 +60,8 @@ public class TreatmentPlanServiceImp implements TreatmentPlanService {
     @Override
     public TreatmentPlan getTreatmentPlan(int id) {
 
-       Boolean treatmentPlan = treatmentPlanRepo.findById(id).isPresent();
-       if(treatmentPlan.equals(false)) {
+       boolean treatmentPlan = treatmentPlanRepo.findById(id).isPresent();
+       if(treatmentPlan) {
            return treatmentPlanRepo.findById(id).get();
        }else throw new NotFoundException("treatment Plan not found");
     }
